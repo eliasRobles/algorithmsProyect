@@ -1,4 +1,4 @@
-Universidad de Costa Rica | Informática Empresarial | Algoritmos y Estructuras de Datos | Tarea Corta #3
+Universidad de Costa Rica | Informática Empresarial | Algoritmos y Estructuras de Datos | Proyecto Final
 
 Members:
 
