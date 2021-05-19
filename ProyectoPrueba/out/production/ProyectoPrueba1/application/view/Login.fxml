@@ -11,7 +11,7 @@
 <AnchorPane id="Login" fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="700.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ControllerLogin">
    <children>
       <ImageView fitHeight="424.0" fitWidth="707.0" layoutX="-6.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane id="JPInicioSesion" fx:id="JPIncioSesion" layoutX="385.0" layoutY="62.0" prefHeight="295.0" prefWidth="266.0" style="-fx-background-color: #9C2827;">
+      <AnchorPane id="JPInicioSesion" fx:id="JPIncioSesion" layoutX="401.0" layoutY="53.0" prefHeight="295.0" prefWidth="266.0" style="-fx-background-color: #9C2827;">
          <children>
             <Label layoutX="74.0" layoutY="31.0" text="Inicio Sesión" textFill="WHITE">
                <font>
@@ -27,12 +27,12 @@
             </Button>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="390.0" fitWidth="368.0" layoutX="34.0" layoutY="12.0" opacity="0.31" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="390.0" fitWidth="387.0" layoutX="34.0" layoutY="12.0" opacity="0.31" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Imagen/Peliculas.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="42.0" layoutY="104.0" prefHeight="53.0" prefWidth="332.0" text="Bienvenido a NETFLIX " textFill="WHITE">
+      <Label layoutX="14.0" layoutY="105.0" prefHeight="53.0" prefWidth="387.0" text="Bienvenido a POTATOFLIX" textFill="WHITE">
          <font>
             <Font size="33.0" />
          </font>
