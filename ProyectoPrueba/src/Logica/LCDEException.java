@@ -1,4 +1,4 @@
-package Domain;
+package Logica;
 
 public class LCDEException extends RuntimeException{
 
