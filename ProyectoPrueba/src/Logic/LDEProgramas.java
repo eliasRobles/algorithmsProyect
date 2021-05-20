@@ -1,4 +1,4 @@
-package Logica;
+package Logic;
 
 import Domain.Programa;
 

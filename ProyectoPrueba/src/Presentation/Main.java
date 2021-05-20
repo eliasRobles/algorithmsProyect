@@ -1,12 +1,9 @@
-package application;
+package Presentation;
 
-import Domain.Programa;
-import Logica.LCDEGeneros;
-import Logica.LDEProgramas;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -15,18 +12,17 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        FXMLLoader loader= new FXMLLoader();
-        loader.setLocation(Main.class.getResource("view/Login.fxml"));
-        Pane ventana=(Pane)loader.load();
-        Scene scene= new Scene(ventana);
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-    }
+    }//end start method
 
 
     public static void main(String[] args) {
-        //launch(args);
+        launch(args);
        // System.out.println("Ejemplo");
         /*
         Programa programa1 = new Programa("Serie", 1, 18, "serie1");

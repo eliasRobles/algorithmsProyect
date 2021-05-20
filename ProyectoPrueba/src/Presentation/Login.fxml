@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="Login" fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="700.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.ControllerLogin">
+<AnchorPane id="Login" fx:id="Login" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="700.0" style="-fx-background-color: #20120F;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.LoginController">
    <children>
       <ImageView fitHeight="424.0" fitWidth="707.0" layoutX="-6.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true" />
       <AnchorPane id="JPInicioSesion" fx:id="JPIncioSesion" layoutX="401.0" layoutY="53.0" prefHeight="295.0" prefWidth="266.0" style="-fx-background-color: #9C2827;">
@@ -20,7 +20,7 @@
             </Label>
             <TextField fx:id="jtfUsuario" layoutX="47.0" layoutY="87.0" prefHeight="25.0" prefWidth="187.0" promptText="Usuario" />
             <TextField fx:id="jtfContraseña" layoutX="47.0" layoutY="137.0" prefHeight="25.0" prefWidth="187.0" promptText="Contraseña" />
-            <Button fx:id="jbIniciarSesion" layoutX="67.0" layoutY="190.0" mnemonicParsing="false" onAction="#cambioVentana" prefHeight="35.0" prefWidth="132.0" style="-fx-background-color: #8B0000;" text="Iniciar Sesión" textFill="WHITE">
+            <Button fx:id="jbIniciarSesion" layoutX="67.0" layoutY="190.0" mnemonicParsing="false" onAction="#openWindow" prefHeight="35.0" prefWidth="132.0" style="-fx-background-color: #8B0000;" text="Iniciar Sesión" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
@@ -29,7 +29,7 @@
       </AnchorPane>
       <ImageView fitHeight="390.0" fitWidth="387.0" layoutX="34.0" layoutY="12.0" opacity="0.31" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Imagen/Peliculas.jpg" />
+            <Image url="@../Image/Peliculas.jpg" />
          </image>
       </ImageView>
       <Label layoutX="14.0" layoutY="105.0" prefHeight="53.0" prefWidth="387.0" text="Bienvenido a POTATOFLIX" textFill="WHITE">
