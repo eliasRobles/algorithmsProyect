@@ -61,6 +61,14 @@ public class LDEProgramas {
         }//endElse
     }//exists
 
+    public LDEProgramas getBefore() {
+        return this.before;
+    }
+
+    public LDEProgramas getNext() {
+        return this.next;
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "La lista vacía";
