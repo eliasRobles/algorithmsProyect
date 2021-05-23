@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="524.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.CategoryController">
    <children>
       <AnchorPane prefHeight="524.0" prefWidth="687.0" style="-fx-background-color: #000000;">
@@ -19,22 +18,22 @@
                   <Image url="@../Image/Icons/Icon.png" />
                </image>
             </ImageView>
-            <Button fx:id="bT_Left" layoutX="14.0" layoutY="263.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="&lt;" textFill="WHITE">
+            <Button fx:id="bT_Left" layoutX="14.0" layoutY="263.0" mnemonicParsing="false" onAction="#bT_Left" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="&lt;" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="bT_Right" layoutX="628.0" layoutY="263.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="&gt;" textFill="WHITE">
+            <Button fx:id="bT_Right" layoutX="628.0" layoutY="263.0" mnemonicParsing="false" onAction="#bT_Right" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="&gt;" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
             </Button>
-            <Label contentDisplay="CENTER" layoutX="24.0" layoutY="22.0" prefHeight="31.0" prefWidth="163.0" style="-fx-font-family: Helvetica; -fx-font-family: sans-serif;" text="Categories" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="lB_Title" contentDisplay="CENTER" layoutX="24.0" layoutY="22.0" prefHeight="31.0" prefWidth="163.0" style="-fx-font-family: Helvetica; -fx-font-family: sans-serif;" text="Categories" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="25.0" />
                </font>
             </Label>
-            <Button fx:id="bT_Nodo" layoutX="207.0" layoutY="219.0" mnemonicParsing="false" prefHeight="133.0" prefWidth="273.0" text="NODO">
+            <Button fx:id="bT_Nodo" layoutX="207.0" layoutY="219.0" mnemonicParsing="false" onAction="#bT_Nodo" prefHeight="133.0" prefWidth="273.0" text="NODO">
                <font>
                   <Font name="SansSerif Italic" size="30.0" />
                </font>
@@ -70,6 +69,11 @@
                 </Menu>
               </menus>
             </MenuBar>
+            <Button fx:id="bT_Back" layoutX="321.0" layoutY="422.0" mnemonicParsing="false" onAction="#bT_Back" prefHeight="45.0" prefWidth="83.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="Back" textFill="WHITE">
+               <font>
+                  <Font name="SansSerif Regular" size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

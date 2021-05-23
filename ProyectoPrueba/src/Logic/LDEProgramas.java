@@ -69,6 +69,14 @@ public class LDEProgramas {
         return this.next;
     }
 
+    public String getGenero() {
+        return genero;
+    }
+
+    public Programa getStart() {
+        return start;
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "La lista vacía";
