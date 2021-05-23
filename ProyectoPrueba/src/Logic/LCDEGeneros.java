@@ -93,6 +93,10 @@ public class LCDEGeneros {
         }//endElse
     }//exists
 
+    public LDEProgramas getStart() {
+        return start;
+    }
+
     public String toString() {
         if (isEmpty()) {
             return "No hay programas";
