@@ -4,22 +4,28 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(scene);
+        //Abrir ventana
+        Parent root = FXMLLoader.load(LoginController.class.getResource("Login.fxml"));
+        Scene primaryScene = new Scene(root);
+        primaryStage.setScene(primaryScene);
         primaryStage.show();
 
-    }//end start method
+        //Atributos de la ventana
+        primaryStage.setTitle("MediaStream | Log in");//titulo de la ventana
+        Image icon = new Image(getClass().getResourceAsStream("/Image/Icons/Icon.png"));//icono de la ventana
+        primaryStage.getIcons().add(icon);
+        //primaryStage.setResizable(false);
 
+    }//end start method
 
     public static void main(String[] args) {
         launch(args);
@@ -93,5 +99,5 @@ public class Main extends Application {
 
 
 
-    }// fin Main
+    }// fin Presentation.Main
 }// fin clase
