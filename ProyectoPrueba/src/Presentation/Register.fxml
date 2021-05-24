@@ -34,18 +34,18 @@
                   <Font name="SansSerif Italic" size="15.0" />
                </font>
             </Button>
-            <TextField fx:id="tF_Name" layoutX="57.0" layoutY="196.0" prefHeight="44.0" prefWidth="229.0" promptText="Name" style="-fx-font-family: Helvetica; -fx-background-color: #333333;">
+            <TextField fx:id="tF_Name" layoutX="57.0" layoutY="196.0" prefHeight="44.0" prefWidth="229.0" promptText="Full Name" style="-fx-font-family: Helvetica; -fx-background-color: #333333;">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
             <Separator layoutX="343.0" layoutY="134.0" orientation="VERTICAL" prefHeight="354.0" prefWidth="3.0" />
-            <TextField fx:id="tF_LastName" layoutX="57.0" layoutY="257.0" prefHeight="44.0" prefWidth="229.0" promptText="Last Name" style="-fx-font-family: Helvetica; -fx-background-color: #333333;">
+            <TextField fx:id="tF_LastName" layoutX="57.0" layoutY="257.0" prefHeight="44.0" prefWidth="229.0" promptText="Username" style="-fx-font-family: Helvetica; -fx-background-color: #333333;">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="tF_Username" layoutX="57.0" layoutY="317.0" prefHeight="44.0" prefWidth="229.0" promptText="Username" style="-fx-font-family: Helvetica; -fx-background-color: #333333;">
+            <TextField fx:id="tF_Username" layoutX="57.0" layoutY="317.0" prefHeight="44.0" prefWidth="229.0" promptText="Password" style="-fx-font-family: Helvetica; -fx-background-color: #333333;">
                <font>
                   <Font size="14.0" />
                </font>

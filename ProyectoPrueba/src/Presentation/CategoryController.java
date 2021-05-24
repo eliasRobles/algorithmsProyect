@@ -13,7 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.image.Image;
+import javafx.scene.image.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -54,60 +56,106 @@ public class CategoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        LDEProgramas listaComedia=new LDEProgramas("Comedia");
-        Programa peliculaFirstSunday = new Programa("Pelicula",98,16,"First Sunday");
-        Programa peliculaGrownUps = new Programa("Pelicula",102,12,"Grown Ups");
-        Programa peliculaChangeUp = new Programa("Pelicula",112,16,"Change Up");
-        Programa peliculaNorbit = new Programa("Pelicula",102,16,"Norbit");
-        Programa peliculaWeddingRinger = new Programa("Pelicula",101,14,"Wedding Ringer");
+
+        //Imagenes de comedia:
+        Image FirstSunday = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/FirstSunday.png"));
+        Image GrownUps = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/GrownUps.png"));
+        Image ChangeUp = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/ChangeUp.png"));
+        Image Norbit = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/Norbit.png"));
+        Image WeddingRinger = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/WeddingRinger.png"));
+
+        //Inicialización:
+        Image Comedy = new Image(getClass().getResourceAsStream("/Image/Icons/Comedy.png"));
+        LDEProgramas listaComedia=new LDEProgramas("Comedia", Comedy);
+        Programa peliculaFirstSunday = new Programa("Pelicula",98,16,"First Sunday", FirstSunday);
+        Programa peliculaGrownUps = new Programa("Pelicula",102,12,"Grown Ups", GrownUps);
+        Programa peliculaChangeUp = new Programa("Pelicula",112,16,"Change Up", ChangeUp);
+        Programa peliculaNorbit = new Programa("Pelicula",102,16,"Norbit", Norbit);
+        Programa peliculaWeddingRinger = new Programa("Pelicula",101,14,"Wedding Ringer", WeddingRinger);
         listaComedia.insert(peliculaFirstSunday);
         listaComedia.insert(peliculaGrownUps);
         listaComedia.insert(peliculaChangeUp);
         listaComedia.insert(peliculaNorbit);
         listaComedia.insert(peliculaWeddingRinger);
 
-        LDEProgramas listaTerror=new LDEProgramas("Terror");
-        Programa peliculaIt = new Programa("Pelicula",136,15,"It");
-        Programa peliculaAnnabelle = new Programa("Pelicula",98,15,"Annabelle");
-        Programa peliculaMama = new Programa("Pelicula",100,15,"Mama");
-        Programa peliculaVeronica = new Programa("Pelicula",102,16,"Veronica");
-        Programa peliculaSaw = new Programa("Pelicula",111,18,"Saw");
+        //Imagenes de terror:
+        Image IT = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/IT.png"));
+        Image Annabelle = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Annabelle.png"));
+        Image Mama = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Mama.png"));
+        Image Veronica = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Veronica.png"));
+        Image Saw = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Saw.png"));
+
+        //Inicializacion:
+        Image Horror = new Image(getClass().getResourceAsStream("/Image/Icons/Horror.png"));
+        LDEProgramas listaTerror=new LDEProgramas("Terror", Horror);
+        Programa peliculaIt = new Programa("Pelicula",136,15,"It", IT);
+        Programa peliculaAnnabelle = new Programa("Pelicula",98,15,"Annabelle", Annabelle);
+        Programa peliculaMama = new Programa("Pelicula",100,15,"Mama", Mama);
+        Programa peliculaVeronica = new Programa("Pelicula",102,16,"Veronica", Veronica);
+        Programa peliculaSaw = new Programa("Pelicula",111,18,"Saw", Saw);
         listaTerror.insert(peliculaIt);
         listaTerror.insert(peliculaAnnabelle);
         listaTerror.insert(peliculaMama);
         listaTerror.insert(peliculaVeronica);
         listaTerror.insert(peliculaSaw);
 
-        LDEProgramas listaRomance=new LDEProgramas("Romance");
-        Programa peliculaFriendsWithBenefits = new Programa("Pelicula",109,16,"Friends with Benefits");
-        Programa peliculaAmar = new Programa("Pelicula",105,16,"Amar");
-        Programa peliculaTheNotebook = new Programa("Pelicula",124,16,"The Notebook");
-        Programa peliculaNewness = new Programa("Pelicula",112,16,"Newness");
-        Programa peliculaCatchAndRelease = new Programa("Pelicula",105,16,"Catch & Release");
+        //Imagenes de romance:
+        Image FriendsWithBenefits = new Image(getClass().getResourceAsStream("/Image/Movies/Love/FriendsWithBenefits.png"));
+        Image Amar = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Amar.png"));
+        Image TheNotebook = new Image(getClass().getResourceAsStream("/Image/Movies/Love/TheNotebook.png"));
+        Image Newness = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Newness.png"));
+        Image CatchAndRelease = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Catch&Release.png"));
+
+        //Inicializacion:
+        Image Love = new Image(getClass().getResourceAsStream("/Image/Icons/Love.png"));
+        LDEProgramas listaRomance=new LDEProgramas("Romance", Love);
+        Programa peliculaFriendsWithBenefits = new Programa("Pelicula",109,16,"Friends with Benefits", FriendsWithBenefits);
+        Programa peliculaAmar = new Programa("Pelicula",105,16,"Amar", Amar);
+        Programa peliculaTheNotebook = new Programa("Pelicula",124,16,"The Notebook", TheNotebook);
+        Programa peliculaNewness = new Programa("Pelicula",112,16,"Newness", Newness);
+        Programa peliculaCatchAndRelease = new Programa("Pelicula",105,16,"Catch & Release", CatchAndRelease);
         listaRomance.insert(peliculaFriendsWithBenefits);
         listaRomance.insert(peliculaAmar);
         listaRomance.insert(peliculaTheNotebook);
         listaRomance.insert(peliculaNewness);
         listaRomance.insert(peliculaCatchAndRelease);
 
-        LDEProgramas listaDocumentales=new LDEProgramas("Documentales");
-        Programa peliculaPabloEscobar = new Programa("Pelicula",46,13,"Pablo Escobar");
-        Programa peliculaStoryOfDiana = new Programa("Pelicula",83,13,"Story Of Diana");
-        Programa peliculaGameChangers = new Programa("Pelicula",85,16,"Game Changers");
-        Programa serieWorldWar = new Programa("Serie",51,13,"World War");
-        Programa serieExpedientesCriminales = new Programa("Serie",46,16,"Expedientes Criminales");
+        //Imagenes de Documentales:
+        Image PabloEscobar = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/PabloEscobar.png"));
+        Image StoryOfDiana = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/StoryOfDiana.png"));
+        Image GameChangers = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/GameChangers.png"));
+        Image WorldWar = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/WorldWar.png"));
+        Image ExpedientesCriminales = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/ExpedientesCriminales.png"));
+
+        //Inicializacion:
+        Image Documentaries = new Image(getClass().getResourceAsStream("/Image/Icons/Documentaries.png"));
+        LDEProgramas listaDocumentales=new LDEProgramas("Documentales", Documentaries);
+        Programa peliculaPabloEscobar = new Programa("Pelicula",46,13,"Pablo Escobar", PabloEscobar);
+        Programa peliculaStoryOfDiana = new Programa("Pelicula",83,13,"Story Of Diana", StoryOfDiana);
+        Programa peliculaGameChangers = new Programa("Pelicula",85,16,"Game Changers", GameChangers);
+        Programa serieWorldWar = new Programa("Serie",51,13,"World War", WorldWar);
+        Programa serieExpedientesCriminales = new Programa("Serie",46,16,"Expedientes Criminales", ExpedientesCriminales);
         listaDocumentales.insert(peliculaPabloEscobar);
         listaDocumentales.insert(peliculaStoryOfDiana);
         listaDocumentales.insert(peliculaGameChangers);
         listaDocumentales.insert(serieWorldWar);
         listaDocumentales.insert(serieExpedientesCriminales);
 
-        LDEProgramas listaAccion=new LDEProgramas("Acción");
-        Programa peliculaParker = new Programa("Pelicula",118,18,"Parker");
-        Programa peliculaSkyscraper = new Programa("Pelicula",102,18,"Skyscraper");
-        Programa peliculaEscape = new Programa("Pelicula",115,18,"Escape");
-        Programa peliculaPainAndGain = new Programa("Pelicula",129,18,"Pain & Gain");
-        Programa peliculaLastRunway = new Programa("Pelicula",107,16,"Last Runway");
+        //Imagenes de accion:
+        Image Parker = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Parker.png"));
+        Image Skyscraper = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Skyscraper.png"));
+        Image Escape = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Escape.png"));
+        Image PainAndGain = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Pain&Gain.png"));
+        Image LastRunway = new Image(getClass().getResourceAsStream("/Image/Movies/Action/LastRunway.png"));
+
+        //Inicializacion:
+        Image Action = new Image(getClass().getResourceAsStream("/Image/Icons/Action.png"));
+        LDEProgramas listaAccion=new LDEProgramas("Acción", Action);
+        Programa peliculaParker = new Programa("Pelicula",118,18,"Parker", Parker);
+        Programa peliculaSkyscraper = new Programa("Pelicula",102,18,"Skyscraper", Skyscraper);
+        Programa peliculaEscape = new Programa("Pelicula",115,18,"Escape", Escape);
+        Programa peliculaPainAndGain = new Programa("Pelicula",129,18,"Pain & Gain", PainAndGain);
+        Programa peliculaLastRunway = new Programa("Pelicula",107,16,"Last Runway", LastRunway);
         listaAccion.insert(peliculaParker);
         listaAccion.insert(peliculaSkyscraper);
         listaAccion.insert(peliculaEscape);
@@ -122,7 +170,9 @@ public class CategoryController implements Initializable {
         listaGeneros.insert(listaAccion);
 
         this.listaGlobal=listaGeneros.getStart();//que la lista global tome como inicio la lista de generos
-        this.bT_Nodo.setText(listaGlobal.getGenero());//al boton Nodo le asignamos la lista
+        //inicializamos las imagenes en el boton
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Nodo.setBackground(new Background(new BackgroundImage(listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.bT_Back.setDisable(true);//está deshabilitado para que no se vuelva atrás si está en categorias
 
     }//end del initialize
@@ -132,7 +182,10 @@ public class CategoryController implements Initializable {
 
         lB_Title.setText("Movies");
         this.programaGlobal=listaGlobal.getStart();//traer el primer apuntador de peliculas
-        this.bT_Nodo.setText(programaGlobal.nombre);
+        //Poner de fondo del boton la imagen de la pelicula
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Nodo.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+
         this.bT_Back.setDisable(false);//se habilita para volver a categorias
         this.bT_Left.setDisable(true); // por default el boton de la izquierda se deshabilita porque al inicio el before es nulo
 
@@ -143,11 +196,17 @@ public class CategoryController implements Initializable {
         //si programaGlobal es null, que Nodo ponga las categorias
         if (this.programaGlobal==null) {
             this.listaGlobal=this.listaGlobal.before;
-            this.bT_Nodo.setText(this.listaGlobal.getGenero());
+
+            //pone la imagen de la categoria cada vez que pasa de categoria
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Nodo.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         }else {
             //en caso contrario, Nodo pone las peliculas
             this.programaGlobal=this.programaGlobal.before;
-            this.bT_Nodo.setText(this.programaGlobal.nombre);
+
+            //Poner de fondo del boton la imagen de la pelicula
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Nodo.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
 
             //deshabilita el left cada vez que se llega al final
             if(programaGlobal.before==null) {
@@ -162,11 +221,16 @@ public class CategoryController implements Initializable {
         //si programaGlobal es nulo, que Nodo ponga las categorias
         if (this.programaGlobal==null) {
             this.listaGlobal=this.listaGlobal.next;
-            this.bT_Nodo.setText(this.listaGlobal.getGenero());
+
+            //pone la imagen de la categoria cada vez que se pasa de categoria
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Nodo.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         }else {
             //en caso contrario, que Nodo ponga las peliculas
             this.programaGlobal=this.programaGlobal.next;
-            this.bT_Nodo.setText(this.programaGlobal.nombre);
+            //Poner de fondo del boton la imagen de la pelicula
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Nodo.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
             this.bT_Left.setDisable(false);//habilitamos el boton de la izquierda apenas nos corremos una posicion en la lista
             if (this.programaGlobal.next==null) {
                 this.bT_Right.setDisable(true);
@@ -177,9 +241,13 @@ public class CategoryController implements Initializable {
 
     @FXML
     void bT_Back(ActionEvent event) {
-        this.bT_Nodo.setText(this.listaGlobal.getGenero());//volver de peliculas a generos
+        lB_Title.setText("Categories");
+        //vuelve a poner de fondo las imagenes de categorias
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Nodo.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.programaGlobal=null;//reinicializamos para que los botones derecha e izquierda funciones con categorias y no con peliculas
         this.bT_Back.setDisable(true);//cuando volvemos a categorias deshabilitamos este boton
+        //Poner de fondo del boton la imagen de la pelicula
         this.bT_Left.setDisable(false);//se habilita para poder usarlo en categorias
         this.bT_Right.setDisable(false);//se habilita para poder usarlo en categorias
     }//end del bT_Back
