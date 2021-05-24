@@ -1,6 +1,7 @@
 package Logic;
 
 import Domain.Programa;
+import javafx.scene.image.Image;
 
 public class LDEProgramas {
 
@@ -9,13 +10,15 @@ public class LDEProgramas {
     Programa start;
     String genero;
     int contadorProgramas;
+    public Image img;
 
-    public LDEProgramas(String genero) {
+    public LDEProgramas(String genero, Image img) {
         this.before = null;
         this.next=null;
         this.contadorProgramas=0;
         this.genero=genero;
         this.start=null;
+        this.img=img;
     }//constructor
 
     public int getSize() {
@@ -75,6 +78,10 @@ public class LDEProgramas {
 
     public Programa getStart() {
         return start;
+    }
+
+    public Image getImg() {
+        return img;
     }
 
     public String toString() {

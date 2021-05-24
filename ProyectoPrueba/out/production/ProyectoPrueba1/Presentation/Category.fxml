@@ -18,12 +18,12 @@
                   <Image url="@../Image/Icons/Icon.png" />
                </image>
             </ImageView>
-            <Button fx:id="bT_Left" layoutX="14.0" layoutY="263.0" mnemonicParsing="false" onAction="#bT_Left" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="&lt;" textFill="WHITE">
+            <Button fx:id="bT_Left" layoutX="14.0" layoutY="241.0" mnemonicParsing="false" onAction="#bT_Left" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="&lt;" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="bT_Right" layoutX="628.0" layoutY="263.0" mnemonicParsing="false" onAction="#bT_Right" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="&gt;" textFill="WHITE">
+            <Button fx:id="bT_Right" layoutX="627.0" layoutY="241.0" mnemonicParsing="false" onAction="#bT_Right" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="&gt;" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
@@ -33,7 +33,7 @@
                   <Font name="SansSerif Bold" size="25.0" />
                </font>
             </Label>
-            <Button fx:id="bT_Nodo" layoutX="207.0" layoutY="219.0" mnemonicParsing="false" onAction="#bT_Nodo" prefHeight="133.0" prefWidth="273.0" text="NODO">
+            <Button fx:id="bT_Nodo" layoutX="144.0" layoutY="142.0" mnemonicParsing="false" onAction="#bT_Nodo" prefHeight="244.0" prefWidth="400.0">
                <font>
                   <Font name="SansSerif Italic" size="30.0" />
                </font>
@@ -69,7 +69,7 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <Button fx:id="bT_Back" layoutX="321.0" layoutY="422.0" mnemonicParsing="false" onAction="#bT_Back" prefHeight="45.0" prefWidth="83.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="Back" textFill="WHITE">
+            <Button fx:id="bT_Back" layoutX="302.0" layoutY="429.0" mnemonicParsing="false" onAction="#bT_Back" prefHeight="45.0" prefWidth="83.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="Back" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
