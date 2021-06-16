@@ -1,6 +1,7 @@
 package Presentation;
 
 import Domain.Programa;
+import Domain.Usuario;
 import Logic.LCDEGeneros;
 import Logic.LDEProgramas;
 import javafx.application.Application;
@@ -31,9 +32,46 @@ public class Main extends Application {
     }//end start method
 
     public static void main(String[] args) {
-        launch(args);
+       launch(args);
 
+        /*
+        //----------------------------------------------------
+        Programa peliculaFirstSunday = new Programa("Pelicula",98,16,"First Sunday", null);
+        Programa peliculaGrownUps = new Programa("Pelicula",102,12,"Grown Ups", null);
+        Programa peliculaIt = new Programa("Pelicula",136,15,"It", null);
+        Programa peliculaAnnabelle = new Programa("Pelicula",98,15,"Annabelle", null);
+        Programa peliculaTheNotebook = new Programa("Pelicula",124,16,"The Notebook", null);
+        Programa peliculaNewness = new Programa("Pelicula",112,16,"Newness", null);
 
+        Usuario u = new Usuario(23,"Carlos","M",123, "CR", 1, "Principal");
+        u.getColaPrioridad().encolar(peliculaFirstSunday);
+        u.getColaPrioridad().encolar(peliculaIt);
+        u.getColaPrioridad().encolar(peliculaNewness);
+
+        //u.getColaPrioridad().desencolar();
+        System.out.println(u.getColaPrioridad().toString());
+        System.out.println("Head: "+u.getColaPrioridad().head());
+        System.out.println("Size: "+u.getColaPrioridad().getSize());
+
+        if (u.getColaPrioridad().exists("It")){
+            System.out.println("Existe");
+        }else {
+            System.out.println("NO Existe");
+        }//else
+
+        System.out.println("Position: "+u.getColaPrioridad().getPosition("Newness"));
+
+        //u.getColaPrioridad().cancel();
+        //System.out.println(u.getColaPrioridad().toString());
+
+        if (u.getColaPrioridad().isEmpty()){
+            System.out.println("Colaaaa Vaciaaaaa");
+        }else {
+            System.out.println("Colaaaa NOOOOO Vaciaaaaa");
+        }//else
+
+        //----------------------------------------------------
+        */
 
         //----------------------------------------------------
         /*

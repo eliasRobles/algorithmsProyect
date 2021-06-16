@@ -26,7 +26,7 @@ public class CategoryController implements Initializable {
 
     LDEProgramas listaGlobal = null;
     Programa programaGlobal=null;
-
+    //Necesitaremos un usuarioGlobal que es el que está logueado, para acceder a la cola de prioridad de este
     @FXML
     private Button bT_Left;
 

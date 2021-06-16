@@ -33,7 +33,7 @@ public class LCDEGeneros {
                 }//endWhile
                 aux.next=newList;
                 newList.before=aux;
-                end=newList;
+                this.end=newList;
                 //Hacemos el doble enlace
                 this.contGeneros++;
             }//endIf
