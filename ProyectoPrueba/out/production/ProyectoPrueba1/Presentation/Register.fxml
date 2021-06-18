@@ -55,7 +55,7 @@
                   <Font name="SansSerif Regular" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="402.0" layoutY="149.0" text="Payment Method:" textFill="WHITE">
+            <Label layoutX="406.0" layoutY="149.0" text="Payment Method:" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="15.0" />
                </font>

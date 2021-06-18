@@ -27,17 +27,27 @@ public class CategoryController implements Initializable {
     LDEProgramas listaGlobal = null;
     Programa programaGlobal=null;
     //Necesitaremos un usuarioGlobal que es el que está logueado, para acceder a la cola de prioridad de este
-    @FXML
-    private Button bT_Left;
 
     @FXML
-    private Button bT_Right;
+    private AnchorPane aP_Index;
 
     @FXML
-    private Label lB_Title;
+    private Button bT_Movies;
 
     @FXML
-    private Button bT_Nodo;
+    private Button bT_RightMovies;
+
+    @FXML
+    private Button bT_LeftMovies;
+
+    @FXML
+    private Button bT_LeftCategories;
+
+    @FXML
+    private Button bT_RightCategories;
+
+    @FXML
+    private Button bT_Categories;
 
     @FXML
     private MenuBar mB_Menu;
@@ -53,6 +63,49 @@ public class CategoryController implements Initializable {
 
     @FXML
     private Button bT_Back;
+
+    @FXML
+    private Button bT_Continue;
+
+    @FXML
+    private Button bT_Recomendation;
+
+    @FXML
+    private Button bT_LeftContinue;
+
+    @FXML
+    private Button bT_RightContinue;
+
+    @FXML
+    private Button bT_LeftRecomendation;
+
+    @FXML
+    private Button bT_RightRecomendation;
+
+    @FXML
+    private AnchorPane aP_View;
+
+    @FXML
+    private Button bT_Movie;
+
+    @FXML
+    private Button bT_BackWatching;
+
+    @FXML
+    private Button bT_FInish;
+
+    @FXML
+    private Label lB_Tittle;
+
+    @FXML
+    private ImageView iV_Categories;
+
+    @FXML
+    private ImageView iV_Continue;
+
+    @FXML
+    private ImageView iV_ForYou;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -172,84 +225,249 @@ public class CategoryController implements Initializable {
         this.listaGlobal=listaGeneros.getStart();//que la lista global tome como inicio la lista de generos
         //inicializamos las imagenes en el boton
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-        this.bT_Nodo.setBackground(new Background(new BackgroundImage(listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.bT_Back.setDisable(true);//está deshabilitado para que no se vuelva atrás si está en categorias
+
+        //inicializa los elementos del view de la pelicula desactivados
+        this.bT_Movie.setVisible(false);
+        this.lB_Tittle.setVisible(false);
+        this.bT_BackWatching.setVisible(false);
+        this.bT_FInish.setVisible(false);
+
+
+        //inicializa los botones de peliculas desactivados porque estan los de categorias
+        this.bT_Movies.setVisible(false);
+        this.bT_RightMovies.setVisible(false);
+        this.bT_LeftMovies.setVisible(false);
 
     }//end del initialize
 
     @FXML
-    void bT_Nodo(ActionEvent event) throws IOException {
+    void bT_Categories(ActionEvent event) throws IOException {
 
-        lB_Title.setText("Movies");
+        //quita todos los elementos de categories
+        this.bT_Categories.setVisible(false);
+        this.bT_RightCategories.setVisible(false);
+        this.bT_LeftCategories.setVisible(false);
+
+        //pone todos los elementos de movies
+        this.bT_Movies.setVisible(true);
+        this.bT_RightMovies.setVisible(true);
+        this.bT_LeftMovies.setVisible(true);
+
         this.programaGlobal=listaGlobal.getStart();//traer el primer apuntador de peliculas
         //Poner de fondo del boton la imagen de la pelicula
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-        this.bT_Nodo.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_Movies.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_Back.setDisable(false);//se habilita para volver a categorias
+        this.bT_LeftMovies.setDisable(true); // por default el boton de la izquierda se deshabilita porque al inicio el before es nulo
+
+
+        /*
+        //lB_Title.setText("Movies");
+        this.programaGlobal=listaGlobal.getStart();//traer el primer apuntador de peliculas
+        //Poner de fondo del boton la imagen de la pelicula
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
 
         this.bT_Back.setDisable(false);//se habilita para volver a categorias
-        this.bT_Left.setDisable(true); // por default el boton de la izquierda se deshabilita porque al inicio el before es nulo
+        this.bT_LeftCategories.setDisable(true); // por default el boton de la izquierda se deshabilita porque al inicio el before es nulo
+
+        AnchorPane index = FXMLLoader.load(getClass().getResource("View.fxml"));
+        aP_Index.getChildren().setAll(index);
+        */
+
+
 
     }//end del bT_Nodo
 
     @FXML
-    void bT_Left(ActionEvent event) {
+    void bT_LeftCategories(ActionEvent event) {
         //si programaGlobal es null, que Nodo ponga las categorias
         if (this.programaGlobal==null) {
             this.listaGlobal=this.listaGlobal.before;
 
             //pone la imagen de la categoria cada vez que pasa de categoria
             BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Nodo.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         }else {
             //en caso contrario, Nodo pone las peliculas
             this.programaGlobal=this.programaGlobal.before;
 
             //Poner de fondo del boton la imagen de la pelicula
             BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Nodo.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
 
             //deshabilita el left cada vez que se llega al final
             if(programaGlobal.before==null) {
-                this.bT_Left.setDisable(true);
+                this.bT_LeftCategories.setDisable(true);
             }//end del if
-            this.bT_Right.setDisable(false);
+            this.bT_RightCategories.setDisable(false);
         }//end del else
-    }//end del bT_Left
+    }//end del bT_LeftCategories
 
     @FXML
-    void bT_Right(ActionEvent event) {
+    void bT_RightCategories(ActionEvent event) {
         //si programaGlobal es nulo, que Nodo ponga las categorias
         if (this.programaGlobal==null) {
             this.listaGlobal=this.listaGlobal.next;
 
             //pone la imagen de la categoria cada vez que se pasa de categoria
             BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Nodo.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         }else {
             //en caso contrario, que Nodo ponga las peliculas
             this.programaGlobal=this.programaGlobal.next;
             //Poner de fondo del boton la imagen de la pelicula
             BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Nodo.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-            this.bT_Left.setDisable(false);//habilitamos el boton de la izquierda apenas nos corremos una posicion en la lista
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_LeftCategories.setDisable(false);//habilitamos el boton de la izquierda apenas nos corremos una posicion en la lista
             if (this.programaGlobal.next==null) {
-                this.bT_Right.setDisable(true);
+                this.bT_RightCategories.setDisable(true);
             }//end del if
         }//end del else
-    }//end del bT_Right
+    }//end del bT_RightCategories
 
+    @FXML
+    void bT_Movies(ActionEvent event) throws IOException {
+
+        //AnchorPane index = FXMLLoader.load(getClass().getResource("View.fxml"));
+        //aP_Index.getChildren().setAll(index);
+
+        //quita los elementos del menu
+        bT_Categories.setVisible(false);
+        bT_LeftCategories.setVisible(false);
+        bT_RightCategories.setVisible(false);
+        bT_Recomendation.setVisible(false);
+        bT_LeftRecomendation.setVisible(false);
+        bT_RightRecomendation.setVisible(false);
+        bT_Continue.setVisible(false);
+        bT_RightContinue.setVisible(false);
+        bT_LeftContinue.setVisible(false);
+        bT_Movies.setVisible(false);
+        bT_LeftMovies.setVisible(false);
+        bT_RightMovies.setVisible(false);
+        iV_Categories.setVisible(false);
+        iV_Continue.setVisible(false);
+        iV_ForYou.setVisible(false);
+        bT_Back.setVisible(false);
+
+        //trae los elementos del view de la pelicula
+        this.bT_Movie.setVisible(true);
+        this.lB_Tittle.setVisible(true);
+        this.bT_BackWatching.setVisible(true);
+        this.bT_FInish.setVisible(true);
+
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Movie.setBackground(new Background(new BackgroundImage(this.programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+
+    }//end bT_Movies
+
+    @FXML
+    void bT_LeftMovies(ActionEvent event) {
+
+        //si programaGlobal es null, que Nodo ponga las categorias
+        if (this.programaGlobal==null) {
+            this.listaGlobal=this.listaGlobal.before;
+
+            //pone la imagen de la categoria cada vez que pasa de categoria
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        }else {
+            //en caso contrario, Nodo pone las peliculas
+            this.programaGlobal=this.programaGlobal.before;
+
+            //Poner de fondo del boton la imagen de la pelicula
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Movies.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+
+            //deshabilita el left cada vez que se llega al final
+            if(programaGlobal.before==null) {
+                this.bT_LeftMovies.setDisable(true);
+            }//end del if
+            this.bT_RightMovies.setDisable(false);
+        }//end del else
+
+    }//end bT_LeftMovies
+
+    @FXML
+    void bT_RightMovies(ActionEvent event) {
+
+        //si programaGlobal es nulo, que Nodo ponga las categorias
+        if (this.programaGlobal==null) {
+            this.listaGlobal=this.listaGlobal.next;
+
+            //pone la imagen de la categoria cada vez que se pasa de categoria
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        }else {
+            //en caso contrario, que Nodo ponga las peliculas
+            this.programaGlobal=this.programaGlobal.next;
+            //Poner de fondo del boton la imagen de la pelicula
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Movies.setBackground(new Background(new BackgroundImage(programaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_LeftMovies.setDisable(false);//habilitamos el boton de la izquierda apenas nos corremos una posicion en la lista
+            if (this.programaGlobal.next==null) {
+                this.bT_RightMovies.setDisable(true);
+            }//end del if
+        }//end del else
+
+    }//end bT_RightMovies
 
     @FXML
     void bT_Back(ActionEvent event) {
-        lB_Title.setText("Categories");
+
+        //quita todos los elementos de movies
+        this.bT_Movies.setVisible(false);
+        this.bT_RightMovies.setVisible(false);
+        this.bT_LeftMovies.setVisible(false);
+
+        //pone todos los elementos de categories
+        this.bT_Categories.setVisible(true);
+        this.bT_RightCategories.setVisible(true);
+        this.bT_LeftCategories.setVisible(true);
+
         //vuelve a poner de fondo las imagenes de categorias
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-        this.bT_Nodo.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.programaGlobal=null;//reinicializamos para que los botones derecha e izquierda funciones con categorias y no con peliculas
         this.bT_Back.setDisable(true);//cuando volvemos a categorias deshabilitamos este boton
-        //Poner de fondo del boton la imagen de la pelicula
-        this.bT_Left.setDisable(false);//se habilita para poder usarlo en categorias
-        this.bT_Right.setDisable(false);//se habilita para poder usarlo en categorias
+
+
     }//end del bT_Back
 
-}//end CategoryController class
+    @FXML
+    void bT_BackWatching(ActionEvent event) throws IOException {
+
+        //quita los elementos de categorias
+        this.bT_Movie.setVisible(false);
+        this.lB_Tittle.setVisible(false);
+        this.bT_BackWatching.setVisible(false);
+        this.bT_FInish.setVisible(false);
+
+        //trae los elementos del menu
+        //bT_Categories.setVisible(true);
+        //bT_LeftCategories.setVisible(true);
+        //bT_RightCategories.setVisible(true);
+        bT_Recomendation.setVisible(true);
+        bT_LeftRecomendation.setVisible(true);
+        bT_RightRecomendation.setVisible(true);
+        bT_Continue.setVisible(true);
+        bT_RightContinue.setVisible(true);
+        bT_LeftContinue.setVisible(true);
+        bT_Movies.setVisible(true);
+        bT_LeftMovies.setVisible(true);
+        bT_RightMovies.setVisible(true);
+        iV_Categories.setVisible(true);
+        iV_Continue.setVisible(true);
+        iV_ForYou.setVisible(true);
+        bT_Back.setVisible(true);
+
+        //vuelve a poner de fondo las imagenes de categorias
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_Back.setDisable(false);//cuando volvemos a categorias deshabilitamos este boton
+
+    }//end del bT_BackWatching
+
+}//end CategoryController class 293x167
