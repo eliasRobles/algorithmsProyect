@@ -1,6 +1,7 @@
 package Presentation;
 
 import Domain.Programa;
+import Domain.Usuario;
 import Logic.LCDEGeneros;
 import Logic.LDEProgramas;
 import javafx.event.ActionEvent;
@@ -26,6 +27,9 @@ public class CategoryController implements Initializable {
 
     LDEProgramas listaGlobal = null;
     Programa programaGlobal=null;
+    Usuario usuarioGlobal = null; //este lo hago para las pruebas
+    boolean categoriesActive =true; //ESTO ES NECESARIO PARA QUE FUNCIONE CORRECTAMENTE LO DE LAS COLAS, YA QUE SE NECESITA APLICAR DISTINTOS EFECTOS
+    //SI ESTÁ ACTIVADO O NO DICHO BOTÓN.
     //Necesitaremos un usuarioGlobal que es el que está logueado, para acceder a la cola de prioridad de este
 
     @FXML
@@ -90,6 +94,9 @@ public class CategoryController implements Initializable {
 
     @FXML
     private Button bT_BackWatching;
+
+    @FXML
+    private Button bT_BackWatching2;
 
     @FXML
     private Button bT_FInish;
@@ -240,6 +247,25 @@ public class CategoryController implements Initializable {
         this.bT_RightMovies.setVisible(false);
         this.bT_LeftMovies.setVisible(false);
 
+
+        //--------------------------PRUEBAS--------------------------PRUEBAS--------------------------PRUEBAS--------------------------
+        //Este usuario es para las pruebas
+        Usuario u = new Usuario(23, "Pedro", "M", 123, "Costa Rica", 1, "Principal");
+        /*
+        u.getColaPrioridad().encolar(peliculaFirstSunday);
+        u.getColaPrioridad().encolar(peliculaIt);
+        u.getColaPrioridad().encolar(peliculaNewness);
+        */
+        this.usuarioGlobal = u;
+        //NOTA: acá modifiqué el código para que se cree un usuario con cola vacía, y que estas se vayan agregando conforme uno hace pruebas
+        if (this.usuarioGlobal.getColaPrioridad().isEmpty()) {
+            this.bT_Continue.setDisable(true);
+            this.bT_RightContinue.setDisable(true);
+        }else {
+            //Este carga la primera imagen sea por defecto, aquí se haría la validación de que si es null, se cargue una por defecto y se deshabiliten los botones.
+            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.usuarioGlobal.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        }//else
+        //--------------------------PRUEBAS--------------------------PRUEBAS--------------------------PRUEBAS--------------------------
     }//end del initialize
 
     @FXML
@@ -262,6 +288,7 @@ public class CategoryController implements Initializable {
         this.bT_Back.setDisable(false);//se habilita para volver a categorias
         this.bT_LeftMovies.setDisable(true); // por default el boton de la izquierda se deshabilita porque al inicio el before es nulo
 
+        this.categoriesActive= false;//ESTO indica que ya no está activo el botón de categorías
 
         /*
         //lB_Title.setText("Movies");
@@ -356,6 +383,7 @@ public class CategoryController implements Initializable {
         this.bT_Movie.setVisible(true);
         this.lB_Tittle.setVisible(true);
         this.bT_BackWatching.setVisible(true);
+        this.bT_BackWatching2.setVisible(false);//---
         this.bT_FInish.setVisible(true);
 
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
@@ -433,6 +461,8 @@ public class CategoryController implements Initializable {
         this.programaGlobal=null;//reinicializamos para que los botones derecha e izquierda funciones con categorias y no con peliculas
         this.bT_Back.setDisable(true);//cuando volvemos a categorias deshabilitamos este boton
 
+        this.categoriesActive= true;//ESTO significa que volvemos a estar en las categorías, por lo que se hace menos proceso al usar lo de la cola,
+        //es decir, con respecto a la interfaz gráfica.
 
     }//end del bT_Back
 
@@ -468,6 +498,135 @@ public class CategoryController implements Initializable {
         this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.bT_Back.setDisable(false);//cuando volvemos a categorias deshabilitamos este boton
 
+        //--------------------------------
+        //Este IF permite que cuando se presione el back de cuando la pelicula se está vizualizando, si dicho programa no fue finalizado
+        //Este se agregue a la cola y ya esté disponible tanto el botón de derecha de la cola y la cola como tal
+        if (this.programaGlobal.isVisto()==false){
+            this.usuarioGlobal.getColaPrioridad().encolar(this.programaGlobal);
+            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.usuarioGlobal.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_RightContinue.setDisable(false);
+            this.bT_Continue.setDisable(false);
+        }//if
+        //--------------------------------
+
     }//end del bT_BackWatching
+
+    //---------------------------------------------------------------------------------------------------------------------
+    @FXML
+    void bT_LeftContinue(ActionEvent event) throws IOException {
+        System.out.println("boton izquierda continuo");
+    }//end del bT_LeftContinue
+
+    @FXML
+    void bT_RightContinue(ActionEvent event) throws IOException {
+        //Esto permite que se encole el head y se mueva el head a la siguiente
+        this.usuarioGlobal.getColaPrioridad().encolar(this.usuarioGlobal.getColaPrioridad().desencolar());
+        //Esto permite que se carguen las imagenes del siguiente programa
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Continue.setBackground(new Background(new BackgroundImage(this.usuarioGlobal.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        //System.out.println("boton derecha continuo");
+    }//end del bT_LeftContinue
+
+
+    @FXML
+    void bT_Continue(ActionEvent event) throws IOException {
+        //NOTA: Acá utilizo el mismo código de lo del bt_Movie, solo que agrego el botón respectivo
+
+        //AnchorPane index = FXMLLoader.load(getClass().getResource("View.fxml"));
+        //aP_Index.getChildren().setAll(index);
+        //quita los elementos del menu
+        bT_Categories.setVisible(false);
+        bT_LeftCategories.setVisible(false);
+        bT_RightCategories.setVisible(false);
+        bT_Recomendation.setVisible(false);
+        bT_LeftRecomendation.setVisible(false);
+        bT_RightRecomendation.setVisible(false);
+        bT_Continue.setVisible(false);
+        bT_RightContinue.setVisible(false);
+        bT_LeftContinue.setVisible(false);
+        bT_Movies.setVisible(false);
+        bT_LeftMovies.setVisible(false);
+        bT_RightMovies.setVisible(false);
+        iV_Categories.setVisible(false);
+        iV_Continue.setVisible(false);
+        iV_ForYou.setVisible(false);
+        bT_Back.setVisible(false);
+
+        //trae los elementos del view de la pelicula
+        this.bT_Movie.setVisible(true);
+        this.lB_Tittle.setVisible(true);
+        this.bT_BackWatching.setVisible(false);//-------
+        this.bT_BackWatching2.setVisible(true);
+        this.bT_FInish.setVisible(true);
+
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        //Se usa el mismo bt_Movie porque es igual que el de arriba.
+        this.bT_Movie.setBackground(new Background(new BackgroundImage(this.usuarioGlobal.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+    }//end del bT_BackWatching
+
+    @FXML
+    void bT_BackWatching2(ActionEvent event) throws IOException {
+
+        if (this.categoriesActive){ // ESTE IF dice que, si el botón de las categorias es el que se está mostrando, entonces,
+            //cuando estamos viendo la película derectamente, pero de las colas, solo debemos quitar ese botón y esos datos,
+            //y cargar lo anterior, sin hacer nada más
+            //quita los elementos de categorias
+            this.bT_Movie.setVisible(false);
+            this.lB_Tittle.setVisible(false);
+            this.bT_BackWatching2.setVisible(false);
+            this.bT_FInish.setVisible(false);
+
+            //trae los elementos del menu
+            bT_Recomendation.setVisible(true);
+            bT_LeftRecomendation.setVisible(true);
+            bT_RightRecomendation.setVisible(true);
+            bT_Continue.setVisible(true);
+            bT_RightContinue.setVisible(true);
+            bT_LeftContinue.setVisible(true);
+            bT_Categories.setVisible(true);//---------
+            bT_LeftCategories.setVisible(true); //---------
+            bT_RightCategories.setVisible(true); //---------
+            iV_Categories.setVisible(true);
+            iV_Continue.setVisible(true);
+            iV_ForYou.setVisible(true);
+            bT_Back.setVisible(true);
+
+            //vuelve a poner de fondo las imagenes de categorias
+
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Back.setDisable(true);//cuando volvemos a categorias deshabilitamos este boton
+        }else {// PERO, si el botón de las películas es el activo, se debe hacer lo mismo, pero también se fdebe llamar al método
+            //de bt_Back, lo que permite que se carge BIEN la cuestión de las categorías.
+            this.bT_Movie.setVisible(false);
+            this.lB_Tittle.setVisible(false);
+            this.bT_BackWatching2.setVisible(false);
+            this.bT_FInish.setVisible(false);
+
+            bT_Recomendation.setVisible(true);
+            bT_LeftRecomendation.setVisible(true);
+            bT_RightRecomendation.setVisible(true);
+            bT_Continue.setVisible(true);
+            bT_RightContinue.setVisible(true);
+            bT_LeftContinue.setVisible(true);
+            bT_Categories.setVisible(true);//---------
+            bT_LeftCategories.setVisible(true); //---------
+            bT_RightCategories.setVisible(true); //---------
+            iV_Categories.setVisible(true);
+            iV_Continue.setVisible(true);
+            iV_ForYou.setVisible(true);
+            bT_Back.setVisible(true);
+
+            //vuelve a poner de fondo las imagenes de categorias
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Back.setDisable(false);//cuando volvemos a categorias deshabilitamos este boton
+
+            //SE llama a bt_Back
+            this.bT_Back(event);
+        }//endElse
+        //NOTA: En este método no es necesario cambiar a categorieActive ya que cono solo el cambio anterior es suficiente.
+    }//end del bT_BackWatching
+    //---------------------------------------------------------------------------------------------------------------------
 
 }//end CategoryController class 293x167

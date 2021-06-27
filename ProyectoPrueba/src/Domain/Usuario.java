@@ -12,7 +12,6 @@ public class Usuario {
     private String ocupacion;  // esta ocuapcion es para las cuentas compartidas, es decir, para cuando es hijo1, principal, amigo 2, y así.
     private ColaEnlazada colaPrioridad;  //este sería para la implementación, de la cola de prioridad
 
-
     public Usuario(int edad, String nombre, String genero, int tarjeta, String país, int condigoDeCuenta, String ocupacion) {
         this.edad = edad;
         this.nombre = nombre;
@@ -55,6 +54,5 @@ public class Usuario {
     public ColaEnlazada getColaPrioridad() {
         return colaPrioridad;
     }
-
 
 }//fin class

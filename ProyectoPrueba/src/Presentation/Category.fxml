@@ -84,7 +84,7 @@
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="bT_Continue" layoutX="328.0" layoutY="307.0" mnemonicParsing="false" prefHeight="170.0" prefWidth="300.0">
+            <Button fx:id="bT_Continue" layoutX="328.0" layoutY="307.0" mnemonicParsing="false" onAction="#bT_Continue" prefHeight="170.0" prefWidth="300.0">
                <font>
                   <Font name="SansSerif Italic" size="30.0" />
                </font>
@@ -94,12 +94,12 @@
                   <Font name="SansSerif Italic" size="30.0" />
                </font>
             </Button>
-            <Button fx:id="bT_LeftContinue" layoutX="227.0" layoutY="374.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #141414;" text="&lt;" textFill="WHITE">
+            <Button fx:id="bT_LeftContinue" layoutX="227.0" layoutY="374.0" mnemonicParsing="false" onAction="#bT_LeftContinue" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #141414;" text="&lt;" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="bT_RightContinue" layoutX="727.0" layoutY="374.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #141414;" text="&gt;" textFill="WHITE">
+            <Button fx:id="bT_RightContinue" layoutX="727.0" layoutY="374.0" mnemonicParsing="false" onAction="#bT_RightContinue" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #141414;" text="&gt;" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
@@ -145,6 +145,11 @@
                   <Font name="SansSerif Bold" size="25.0" />
                </font>
             </Label>
+            <Button fx:id="bT_BackWatching2" layoutX="39.0" layoutY="650.0" mnemonicParsing="false" onAction="#bT_BackWatching2" prefHeight="45.0" prefWidth="106.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="Back" textFill="WHITE">
+               <font>
+                  <Font name="SansSerif Regular" size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

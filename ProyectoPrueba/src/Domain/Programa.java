@@ -10,6 +10,7 @@ public class Programa {
     public String nombre;
     public Programa next, before;
     public Image img;
+    private boolean visto;//-------------- Esto es IMPORTANTE ya que permite saber si el programa se visualizó o no, tembipen diferencia la cola de las recomendaciones
     //1) Hacer una segunda imagen con todos los datos de esta, que es mas tedioso.
     //2) Hacer solo una imagen de fondo, (como una escena de la peli) e ir poniendo los datos de la lista global..
     //3) Hacer un fondo negro y poner los datos, nada mas.
@@ -24,6 +25,7 @@ public class Programa {
         this.next=null;
         this.before=null;
         this.img=img;
+        this.visto=false;
     }//constructor
 
     @Override
@@ -35,4 +37,8 @@ public class Programa {
                 ", nombre='" + nombre + '\'' +
                 '}';
     }//toString
+
+    public boolean isVisto() {
+        return visto;
+    }//---------------------
 }//fin class

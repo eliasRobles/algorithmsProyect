@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    LoginController lC = new LoginController();
+    RegisterController rC = new RegisterController();
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
