@@ -275,10 +275,9 @@ public class IndexController implements Initializable {
         }//else
 
         this.uptadeData(Integer.parseInt(activeUser.getAge())); //cargamos las listas con los datos del usuario
+        mB_CategoryUser.setText(activeAccount.getUsername());
         aP_Users.setVisible(false);
         aP_Category.setVisible(true);
-        mB_CategoryUser.setText(activeAccount.getUsername());
-
 
     }//end bT_UserOne
 
