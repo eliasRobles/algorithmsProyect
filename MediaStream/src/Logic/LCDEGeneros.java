@@ -19,28 +19,30 @@ public class LCDEGeneros {
     }//isEmpty
 
     public void insert(LDEProgramas lista) {
+        if (!lista.isEmpty()){//Si la lista no está vacía, la agregamos.
+            //Esto quiere decir que si está vacía, es porque ningun programa era apto de esa lista, por lo que no se agrega
+            LDEProgramas aux=start;
+            LDEProgramas newList= lista;
 
-        LDEProgramas aux=start;
-        LDEProgramas newList= lista;
-
-        if (aux==null) {
-            start=end=newList;
-            this.contGeneros++;
-        }else {
-            if (!exists(lista)) {
-                while(aux!=end) {
-                    aux=aux.next;
-                }//endWhile
-                aux.next=newList;
-                newList.before=aux;
-                this.end=newList;
-                //Hacemos el doble enlace
+            if (aux==null) {
+                start=end=newList;
                 this.contGeneros++;
-            }//endIf
-        }//endElse
-        this.end.next=this.start;
-        this.start.before=this.end;
-        //Hacemos el enlace circular
+            }else {
+                if (!exists(lista)) {
+                    while(aux!=end) {
+                        aux=aux.next;
+                    }//endWhile
+                    aux.next=newList;
+                    newList.before=aux;
+                    this.end=newList;
+                    //Hacemos el doble enlace
+                    this.contGeneros++;
+                }//endIf
+            }//endElse
+            this.end.next=this.start;
+            this.start.before=this.end;
+            //Hacemos el enlace circular
+        }//if
     }//insert
 
     public Object getBefore(Object element){
