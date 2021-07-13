@@ -278,7 +278,7 @@ public class IndexController implements Initializable {
         aP_Users.setVisible(false);
         aP_Category.setVisible(true);
         mB_CategoryUser.setText(activeAccount.getUsername());
-        
+
 
     }//end bT_UserOne
 
