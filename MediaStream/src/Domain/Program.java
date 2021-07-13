@@ -7,20 +7,17 @@ public class Program {
     public int duracion;
     public int restriccion;
     public String nombre;
+    public String genero;
     public Program next, before;
     public Image img;
-    private boolean visto;//-------------- Esto es IMPORTANTE ya que permite saber si el programa se visualizó o no, tembipen diferencia la cola de las recomendaciones
-    //1) Hacer una segunda imagen con todos los datos de esta, que es mas tedioso.
-    //2) Hacer solo una imagen de fondo, (como una escena de la peli) e ir poniendo los datos de la lista global..
-    //3) Hacer un fondo negro y poner los datos, nada mas.
-    //Nota: esto se trataría como una nueva ventana o en la misma...
+    private boolean visto;//Esto es IMPORTANTE ya que permite saber si el programa se visualizó o no, tembien diferencia la cola de las recomendaciones
 
-
-    public Program(String tipo, int duracion, int restriccion, String nombre, Image img) {
+    public Program(String tipo, int duracion, int restriccion, String nombre,String genero, Image img) {
         this.tipo=tipo;
         this.duracion=duracion;
         this.restriccion=restriccion;
         this.nombre=nombre;
+        this.genero=genero;
         this.next=null;
         this.before=null;
         this.img=img;
@@ -33,11 +30,16 @@ public class Program {
                 "tipo='" + tipo + '\'' +
                 ", duracion=" + duracion +
                 ", restriccion=" + restriccion +
-                ", nombre='" + nombre + '\'' +
+                ", nombre='" + nombre + '\'' +", genero='" + genero + '\'' +
                 '}';
     }//toString
 
     public boolean isVisto() {
         return visto;
     }//---------------------
+
+    public void setVisto(boolean visto) {
+        this.visto = visto;
+    }
+
 }//fin class

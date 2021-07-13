@@ -10,13 +10,12 @@ public class Account {
     private String cardNumber;
     private String cv;
     private String expireDate;
-    private String status;  // esta ocuapcion es para las cuentas compartidas, es decir, para cuando es hijo1, principal, amigo 2, y así.
     private User userOne;
     private User userTwo;
     private User userThree;
 
 
-    public Account(String name, String username, String password, String age, String gender, String cardNumber, String cv, String expireDate, String status) {
+    public Account(String name, String username, String password, String age, String gender, String cardNumber, String cv, String expireDate) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -25,7 +24,6 @@ public class Account {
         this.cardNumber = cardNumber;
         this.cv = cv;
         this.expireDate = expireDate;
-        this.status = status;
         this.userOne = null;
         this.userTwo = null;
         this.userThree = null;
@@ -95,16 +93,8 @@ public class Account {
         this.expireDate = expireDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
-        return "" + name + "|" + username + "|" + password + "|" + age + "|" + gender + "|" + cardNumber + "|" + cv + "|" + expireDate + "|" + status;
+        return "" + name + "|" + username + "|" + password + "|" + age + "|" + gender + "|" + cardNumber + "|" + cv + "|" + expireDate;
     }
 }//fin class

@@ -68,19 +68,21 @@ public class ColaEnlazada implements Cola {
     public boolean exists(Object element) {
         Nodo aux = this.first;
         boolean existe = false;
-        if (this.first.program.nombre==element) {
-            existe=true;
-        }else {
-            while (aux.next!=null) {
-                if (aux.program.nombre==element) {
-                    existe=true;
-                }//endIf
-                aux = aux.next;
-            }//endWhile
-            if (aux.program.nombre==element) {
-                existe=true;
-            }//endIf
-        }//endElse
+       if (!isEmpty()){
+           if (this.first.program.nombre.equals(element)) {
+               existe=true;
+           }else {
+               while (aux.next!=null) {
+                   if (aux.program.nombre==element) {
+                       existe=true;
+                   }//endIf
+                   aux = aux.next;
+               }//endWhile
+               if (aux.program.nombre==element) {
+                   existe=true;
+               }//endIf
+           }//endElse
+       }//if
         return existe;
     }//exists
 
@@ -109,6 +111,16 @@ public class ColaEnlazada implements Cola {
             return posReturn;
         }//endElse
     }//getPosition
+
+    public void borrar(String name){
+        while (this.exists(name)==true){
+            if (this.head().nombre.equals(name)){
+                this.desencolar();
+            }else{
+                this.encolar(this.desencolar());
+            }//else
+        }//while
+    }//borrar
 
     public String toString() {
         Nodo aux = this.first;
