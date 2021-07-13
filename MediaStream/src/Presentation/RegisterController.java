@@ -1,5 +1,6 @@
 package Presentation;
 
+import Data.StatusData;
 import Domain.Account;
 import Logic.ColaEnlazada;
 import javafx.event.ActionEvent;
@@ -90,117 +91,6 @@ public class RegisterController implements Initializable {
 
     }//end bT_LogIn
 
-    void signUp(){
-        File fileAccount = new File("accounts.txt");
-        String givenUsername = tF_Username.getText();
-
-        try{
-            FileInputStream fis = new FileInputStream(fileAccount);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-
-            String actualRegister = br.readLine();
-
-            while(actualRegister != null){
-
-                String name = "";
-                String username = "";
-                String password = "";
-                String age = "";
-                String gender = "";
-                String cardNumber = "";
-                String cv = "";
-                String expireDate = "";
-                String status = "";
-                ColaEnlazada colaPrioridad = null;
-                int controlToken = 0;
-
-                StringTokenizer sT = new StringTokenizer(actualRegister, "|");
-
-                while(sT.hasMoreTokens()){
-
-                    if(controlToken == 1)
-                        name = sT.nextToken();
-                    else if(controlToken == 2)
-                        username = sT.nextToken();
-                    else if(controlToken == 3)
-                        password = sT.nextToken();
-                    else if(controlToken == 4)
-                        age = sT.nextToken();
-                    else if(controlToken == 5)
-                        gender = sT.nextToken();
-                    else if(controlToken == 6)
-                        cardNumber = sT.nextToken();
-                    else if(controlToken == 7)
-                        cv = sT.nextToken();
-                    else if(controlToken == 8)
-                        status = sT.nextToken();
-
-                    controlToken++;
-                }//end while
-
-                if(tF_Name.getText().equals("") || tF_Username.getText().equals("") || pF_Password.getText().equals("") || tF_Age.getText().equals("") || tF_CardNumber.getText().equals("") || tF_SecurityCode.getText().equals("") || tF_ExpireDate.getText().equals("")){
-                    lB_Advice.setText("All spaces are required.");
-                    lB_Advice.setTextFill(Color.DARKRED);
-                    lB_Advice.setAlignment(Pos.CENTER);
-                    bT_Login1.setVisible(false);
-                    lB_Advice1.setVisible(false);
-                }//end if
-                else {
-                    if(givenUsername.equals(username)){
-                        lB_Advice.setText("This username already exists.");
-                        lB_Advice.setTextFill(Color.DARKRED);
-                        lB_Advice.setAlignment(Pos.CENTER);
-                        bT_Login1.setVisible(false);
-                        lB_Advice1.setVisible(false);
-                        break;
-                    }//end if
-                    else{
-                        name = tF_Name.getText();
-                        username = tF_Username.getText();
-                        password = pF_Password.getText();
-                        age = tF_Age.getText();
-                        gender = cB_Gender.getValue().toString();
-                        cardNumber = tF_CardNumber.getText();
-                        cv = tF_SecurityCode.getText();
-                        expireDate = tF_ExpireDate.getText();
-                        status = "0";
-
-                        Account account = new Account(name, username, password, age, gender, cardNumber, cv, expireDate, status);
-
-                        addAccount(account);
-
-                        tF_Name.clear();
-                        tF_Name.clear();
-                        tF_Username.clear();
-                        pF_Password.clear();
-                        tF_Age.clear();
-                        tF_CardNumber.clear();
-                        tF_SecurityCode.clear();
-                        tF_ExpireDate.clear();
-
-                        lB_Advice.setText("Account created succesfully.");
-                        lB_Advice.setTextFill(Color.DARKGREEN);
-                        lB_Advice.setAlignment(Pos.CENTER);
-                        bT_Login1.setVisible(true);
-                        lB_Advice1.setVisible(true);
-                        break;
-                    }//end else
-                }//end else
-
-                actualRegister = br.readLine();
-            }//end while
-        }//end try
-
-        catch(FileNotFoundException fnfe){
-            JOptionPane.showMessageDialog(null, "We have problems with the file.");
-        }//end catch
-
-        catch(IOException ioe){
-            JOptionPane.showMessageDialog(null, "We have problems with the file.");
-        }//end catch
-    }
-
     @FXML
     void bT_SignUp(ActionEvent event) {
 
@@ -240,11 +130,18 @@ public class RegisterController implements Initializable {
                     cardNumber = tF_CardNumber.getText();
                     cv = tF_SecurityCode.getText();
                     expireDate = tF_ExpireDate.getText();
-                    status = "0";
 
-                    Account account = new Account(name, username, password, age, gender, cardNumber, cv, expireDate, status);
+                    Account account = new Account(name, username, password, age, gender, cardNumber, cv, expireDate);
 
                     addAccount(account);
+                    StatusData statusData = new StatusData();
+                    try {
+                        statusData.guardarPos(0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }//try-catch
 
                     tF_Name.clear();
                     tF_Name.clear();
@@ -298,7 +195,7 @@ public class RegisterController implements Initializable {
             FileOutputStream fos = new FileOutputStream(fileAccount, true);
             PrintStream ps = new PrintStream(fos);
 
-            ps.println(account.getName() + "|" + account.getUsername() + "|" + account.getPassword() + "|" + account.getAge() + "|" + account.getGender() + "|" + account.getCardNumber() + "|" + account.getCv() + "|" + account.getExpireDate() + "|" + account.getStatus());
+            ps.println(account.getName() + "|" + account.getUsername() + "|" + account.getPassword() + "|" + account.getAge() + "|" + account.getGender() + "|" + account.getCardNumber() + "|" + account.getCv() + "|" + account.getExpireDate());
         }//end Try
 
         catch(FileNotFoundException fnfe){
@@ -393,7 +290,7 @@ public class RegisterController implements Initializable {
                     controlToken++;
                 }//end while
 
-                    Account account = new Account(name, username, password, age, gender, cardNumber, cv, expireDate, status);
+                    Account account = new Account(name, username, password, age, gender, cardNumber, cv, expireDate);
 
                     array[indexArray] = account;
 
@@ -401,6 +298,9 @@ public class RegisterController implements Initializable {
 
                 actualRegister = br.readLine();
             }//end while
+            br.close();
+            isr.close();
+            fis.close();
         }//end try
 
         catch(FileNotFoundException fnfe){
@@ -412,6 +312,8 @@ public class RegisterController implements Initializable {
         }//end catch
 
         return array;
+
+        //NO Hay .close...
     }//end method getRegisterFile
 
 

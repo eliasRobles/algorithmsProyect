@@ -21,7 +21,7 @@
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="bT_ViewFinish" layoutX="832.0" layoutY="640.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="106.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="Finish" textFill="WHITE">
+            <Button fx:id="bT_ViewFinish" layoutX="832.0" layoutY="640.0" mnemonicParsing="false" onAction="#bt_FInish" prefHeight="45.0" prefWidth="106.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="Finish" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
@@ -46,6 +46,16 @@
                   <Image url="@../Image/Icons/Icon.png" />
                </image>
             </ImageView>
+            <Button fx:id="bT_ViewFinish2" layoutX="832.0" layoutY="640.0" mnemonicParsing="false" onAction="#bt_FInish2" prefHeight="45.0" prefWidth="106.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="Finish" textFill="WHITE">
+               <font>
+                  <Font name="SansSerif Regular" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="bT_ViewFinish3" layoutX="832.0" layoutY="640.0" mnemonicParsing="false" onAction="#bt_FInish3" prefHeight="45.0" prefWidth="106.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #007bb0;" text="Finish" textFill="WHITE">
+               <font>
+                  <Font name="SansSerif Regular" size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="aP_Category" prefHeight="730.0" prefWidth="990.0" style="-fx-background-color: #000000;">
@@ -95,7 +105,7 @@
                   <Font name="SansSerif Italic" size="30.0" />
                </font>
             </Button>
-            <Button fx:id="bT_Recomendation" layoutX="328.0" layoutY="511.0" mnemonicParsing="false" prefHeight="170.0" prefWidth="300.0">
+            <Button fx:id="bT_Recomendation" layoutX="328.0" layoutY="511.0" mnemonicParsing="false" onAction="#bT_Recomendation" prefHeight="170.0" prefWidth="300.0">
                <font>
                   <Font name="SansSerif Italic" size="30.0" />
                </font>
@@ -115,7 +125,7 @@
                   <Font name="SansSerif Regular" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="bT_RightRecomendation" layoutX="727.0" layoutY="573.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #141414;" text="&gt;" textFill="WHITE">
+            <Button fx:id="bT_RightRecomendation" layoutX="727.0" layoutY="573.0" mnemonicParsing="false" onAction="#bT_RightRecomendation" prefHeight="45.0" prefWidth="45.0" style="-fx-background-radius: 5em; -fx-border-radius: 5em; -fx-background-color: #141414;" text="&gt;" textFill="WHITE">
                <font>
                   <Font name="SansSerif Regular" size="18.0" />
                </font>

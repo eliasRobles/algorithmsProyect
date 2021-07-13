@@ -1,5 +1,7 @@
 package Presentation;
 
+import Business.StatusBusiness;
+import Data.StatusData;
 import Domain.Account;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -59,22 +62,13 @@ public class LoginController implements Initializable {
             }//end if
             else {
                 if(returnAccount(givenUser, givenPassword) && givenUser.equals(array[i].getUsername()) && givenPassword.equals(array[i].getPassword())){
-
-                    //Recoge toda la informacion de la cuenta para volver a escribirla, pero con el 1 de actividad
-                    String name = array[i].getName();
-                    String username = array[i].getUsername();
-                    String password = array[i].getPassword();
-                    String age = array[i].getAge();
-                    String gender = array[i].getGender();
-                    String cardNumber = array[i].getCardNumber();
-                    String cv = array[i].getCv();
-                    String expireDate = array[i].getExpireDate();
-                    String status = "1";//significa que el usuario esta activos
-
-                    //Crea un nuevo account, se llama al metodo que reescribe y lo reescribe
-                    Account account = new Account(name, username, password, age, gender, cardNumber, cv, expireDate, status);
-                    rewriteAccount(array[i].getName(), account);
-
+                    try {
+                        StatusBusiness statusBusiness = new StatusBusiness();
+                        statusBusiness.logIn(i, (ArrayList<Integer>)statusBusiness.retornarPosiciones()); //Nos logueamos
+                        //es decir, hacemos que tengamos un uno, por lo que nuestra cuenta será la activa
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }//try-catch
                     //luego abre la ventana
                     Stage stage = (Stage) bT_Login.getScene().getWindow();
                     stage.setWidth(1000);
@@ -85,8 +79,7 @@ public class LoginController implements Initializable {
                     LoginBase.getChildren().setAll(pane);
                     break;
 
-                }//end if username
-                else{
+                }else{
                     lB_Advice.setText("Incorrect credentials.");
                     lB_Advice.setTextFill(Color.DARKRED);
                     pF_Password.clear();
@@ -126,49 +119,5 @@ public class LoginController implements Initializable {
         return false;
 
     }//end returnUsername
-
-
-    public void rewriteAccount(String name, Account account) {
-
-        String changes = account.toString();
-
-        File fileAccount = new File("accounts.txt");
-
-        try {
-
-            File file = new File("accounts.txt");
-
-            File temp = File.createTempFile("accounts", ".txt", file.getParentFile());
-            String charset = "UTF-8";
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(temp), charset));
-
-            for (String line; (line = br.readLine()) != null;) {
-
-                if (line.contains(name)) {
-                    line = line.replace(line, changes);
-                    writer.println(line);
-                } else {
-                    writer.println(line.trim());
-                }
-            }//end for
-
-            br.close();
-            writer.close();
-            file.delete();
-            temp.renameTo(file);
-
-        }//End Try
-        catch(FileNotFoundException fnfe){
-            JOptionPane.showMessageDialog(null, "We have problems with the file.");
-        }//end catch
-
-        catch(IOException ioe){
-            JOptionPane.showMessageDialog(null, "We have problems with the file.");
-        }//end catch
-
-    }//end editACountry
-
 
 }//end LoginControllerClass

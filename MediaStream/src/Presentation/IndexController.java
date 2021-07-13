@@ -1,5 +1,6 @@
 package Presentation;
 
+import Business.StatusBusiness;
 import Domain.Account;
 import Domain.Program;
 import Domain.User;
@@ -19,15 +20,16 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class IndexController implements Initializable {
 
-    LDEProgramas listaGlobal = null;
+    LCDEGeneros listaGenerosGlobal = null;
+    LDEProgramas listaProgramasActiva = null;
     Program programGlobal = null;
-    User userGlobal = null; //este lo hago para las pruebas
     boolean categoriesActive =true; //ESTO ES NECESARIO PARA QUE FUNCIONE CORRECTAMENTE LO DE LAS COLAS, YA QUE SE NECESITA APLICAR DISTINTOS EFECTOS
-
+    boolean activeRecomendation = false;
     RegisterController rC = new RegisterController();
     Account activeAccount = null;
     User activeUser = null;
@@ -38,40 +40,25 @@ public class IndexController implements Initializable {
 
     //-------------Users-------------//
     @FXML
-    private AnchorPane aP_Users;
-
-    @FXML
-    private Button bT_UserTwo;
-
-    @FXML
-    private Button bT_UserOne;
-
-    @FXML
-    private Button bT_UserThree;
-
-    @FXML
-    private MenuButton mB_User;
-
-    @FXML
-    private MenuItem mI_LogOut;
-
-    @FXML
-    private Button bT_EditUser;
-
-    @FXML
-    private Label lB_UserOne;
-
-    @FXML
-    private Label lB_UserTwo;
-
-    @FXML
-    private Label lB_UserThree;
-    //-------------Users-------------//
-
-
-    //-------------Category-------------//
-    @FXML
     private AnchorPane CategoryBase;
+
+    @FXML
+    private AnchorPane aP_View;
+
+    @FXML
+    private Button bT_ViewMovie;
+
+    @FXML
+    private Button bT_BackWatching;
+
+    @FXML
+    private Button bT_ViewFinish;
+
+    @FXML
+    private Button bT_BackWatching2;
+
+    @FXML
+    private Label lB_Info;
 
     @FXML
     private AnchorPane aP_Category;
@@ -116,21 +103,6 @@ public class IndexController implements Initializable {
     private Button bT_RightRecomendation;
 
     @FXML
-    private Button bT_Movie;
-
-    @FXML
-    private Button bT_BackWatching;
-
-    @FXML
-    private Button bT_BackWatching2;
-
-    @FXML
-    private Button bT_FInish;
-
-    @FXML
-    private Label lB_Tittle;
-
-    @FXML
     private ImageView iV_Categories;
 
     @FXML
@@ -140,35 +112,17 @@ public class IndexController implements Initializable {
     private ImageView iV_ForYou;
 
     @FXML
-    private Button bT_LogOut;
-
-    @FXML
     private MenuButton mB_CategoryUser;
 
     @FXML
     private MenuItem mI_SwitchUser;
 
     @FXML
-    private MenuItem mI_CategoryLogOut;
-    //-------------Category-------------//
-
-
-    //-------------View-------------//
-    @FXML
-    private AnchorPane aP_View;
+    private MenuItem mI_LogOut1;
 
     @FXML
-    private Button bT_ViewMovie;
+    private Button bT_LogOut;
 
-    @FXML
-    private Button bT_ViewFinish;
-
-    @FXML
-    private Label lB_Info;
-    //-------------View-------------//
-
-
-    //-------------Edit-------------//
     @FXML
     private AnchorPane aP_EditUser;
 
@@ -192,158 +146,58 @@ public class IndexController implements Initializable {
 
     @FXML
     private CheckBox cB_User3;
-    //-------------Edit-------------//
 
+    @FXML
+    private AnchorPane aP_Users;
+
+    @FXML
+    private Button bT_UserOne;
+
+    @FXML
+    private Button bT_UserThree;
+
+    @FXML
+    private Button bT_EditUser;
+
+    @FXML
+    private Label lB_UserOne;
+
+    @FXML
+    private Label lB_UserTwo;
+
+    @FXML
+    private Label lB_UserThree;
+
+    @FXML
+    private MenuButton mB_User;
+
+    @FXML
+    private MenuItem mI_LogOut;
+
+    @FXML
+    private Button bT_UserTwo;
+
+    @FXML
+    private Button bT_ViewFinish2;
+
+    @FXML
+    private Button bT_ViewFinish3;
+
+    //-------------Edit-------------//
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //Imagenes de comedia:
-        Image FirstSunday = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/FirstSunday.png"));
-        Image GrownUps = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/GrownUps.png"));
-        Image ChangeUp = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/ChangeUp.png"));
-        Image Norbit = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/Norbit.png"));
-        Image WeddingRinger = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/WeddingRinger.png"));
-
-        //Inicialización:
-        Image Comedy = new Image(getClass().getResourceAsStream("/Image/Icons/Comedy.png"));
-        LDEProgramas listaComedia=new LDEProgramas("Comedia", Comedy);
-        Program peliculaFirstSunday = new Program("Pelicula",98,16,"First Sunday", FirstSunday);
-        Program peliculaGrownUps = new Program("Pelicula",102,12,"Grown Ups", GrownUps);
-        Program peliculaChangeUp = new Program("Pelicula",112,16,"Change Up", ChangeUp);
-        Program peliculaNorbit = new Program("Pelicula",102,16,"Norbit", Norbit);
-        Program peliculaWeddingRinger = new Program("Pelicula",101,14,"Wedding Ringer", WeddingRinger);
-        listaComedia.insert(peliculaFirstSunday);
-        listaComedia.insert(peliculaGrownUps);
-        listaComedia.insert(peliculaChangeUp);
-        listaComedia.insert(peliculaNorbit);
-        listaComedia.insert(peliculaWeddingRinger);
-
-        //Imagenes de terror:
-        Image IT = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/IT.png"));
-        Image Annabelle = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Annabelle.png"));
-        Image Mama = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Mama.png"));
-        Image Veronica = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Veronica.png"));
-        Image Saw = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Saw.png"));
-
-        //Inicializacion:
-        Image Horror = new Image(getClass().getResourceAsStream("/Image/Icons/Horror.png"));
-        LDEProgramas listaTerror=new LDEProgramas("Terror", Horror);
-        Program peliculaIt = new Program("Pelicula",136,15,"It", IT);
-        Program peliculaAnnabelle = new Program("Pelicula",98,15,"Annabelle", Annabelle);
-        Program peliculaMama = new Program("Pelicula",100,15,"Mama", Mama);
-        Program peliculaVeronica = new Program("Pelicula",102,16,"Veronica", Veronica);
-        Program peliculaSaw = new Program("Pelicula",111,18,"Saw", Saw);
-        listaTerror.insert(peliculaIt);
-        listaTerror.insert(peliculaAnnabelle);
-        listaTerror.insert(peliculaMama);
-        listaTerror.insert(peliculaVeronica);
-        listaTerror.insert(peliculaSaw);
-
-        //Imagenes de romance:
-        Image FriendsWithBenefits = new Image(getClass().getResourceAsStream("/Image/Movies/Love/FriendsWithBenefits.png"));
-        Image Amar = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Amar.png"));
-        Image TheNotebook = new Image(getClass().getResourceAsStream("/Image/Movies/Love/TheNotebook.png"));
-        Image Newness = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Newness.png"));
-        Image CatchAndRelease = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Catch&Release.png"));
-
-        //Inicializacion:
-        Image Love = new Image(getClass().getResourceAsStream("/Image/Icons/Love.png"));
-        LDEProgramas listaRomance=new LDEProgramas("Romance", Love);
-        Program peliculaFriendsWithBenefits = new Program("Pelicula",109,16,"Friends with Benefits", FriendsWithBenefits);
-        Program peliculaAmar = new Program("Pelicula",105,16,"Amar", Amar);
-        Program peliculaTheNotebook = new Program("Pelicula",124,16,"The Notebook", TheNotebook);
-        Program peliculaNewness = new Program("Pelicula",112,16,"Newness", Newness);
-        Program peliculaCatchAndRelease = new Program("Pelicula",105,16,"Catch & Release", CatchAndRelease);
-        listaRomance.insert(peliculaFriendsWithBenefits);
-        listaRomance.insert(peliculaAmar);
-        listaRomance.insert(peliculaTheNotebook);
-        listaRomance.insert(peliculaNewness);
-        listaRomance.insert(peliculaCatchAndRelease);
-
-        //Imagenes de Documentales:
-        Image PabloEscobar = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/PabloEscobar.png"));
-        Image StoryOfDiana = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/StoryOfDiana.png"));
-        Image GameChangers = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/GameChangers.png"));
-        Image WorldWar = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/WorldWar.png"));
-        Image ExpedientesCriminales = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/ExpedientesCriminales.png"));
-
-        //Inicializacion:
-        Image Documentaries = new Image(getClass().getResourceAsStream("/Image/Icons/Documentaries.png"));
-        LDEProgramas listaDocumentales=new LDEProgramas("Documentales", Documentaries);
-        Program peliculaPabloEscobar = new Program("Pelicula",46,13,"Pablo Escobar", PabloEscobar);
-        Program peliculaStoryOfDiana = new Program("Pelicula",83,13,"Story Of Diana", StoryOfDiana);
-        Program peliculaGameChangers = new Program("Pelicula",85,16,"Game Changers", GameChangers);
-        Program serieWorldWar = new Program("Serie",51,13,"World War", WorldWar);
-        Program serieExpedientesCriminales = new Program("Serie",46,16,"Expedientes Criminales", ExpedientesCriminales);
-        listaDocumentales.insert(peliculaPabloEscobar);
-        listaDocumentales.insert(peliculaStoryOfDiana);
-        listaDocumentales.insert(peliculaGameChangers);
-        listaDocumentales.insert(serieWorldWar);
-        listaDocumentales.insert(serieExpedientesCriminales);
-
-        //Imagenes de accion:
-        Image Parker = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Parker.png"));
-        Image Skyscraper = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Skyscraper.png"));
-        Image Escape = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Escape.png"));
-        Image PainAndGain = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Pain&Gain.png"));
-        Image LastRunway = new Image(getClass().getResourceAsStream("/Image/Movies/Action/LastRunway.png"));
-
-        //Inicializacion:
-        Image Action = new Image(getClass().getResourceAsStream("/Image/Icons/Action.png"));
-        LDEProgramas listaAccion=new LDEProgramas("Acción", Action);
-        Program peliculaParker = new Program("Pelicula",118,18,"Parker", Parker);
-        Program peliculaSkyscraper = new Program("Pelicula",102,18,"Skyscraper", Skyscraper);
-        Program peliculaEscape = new Program("Pelicula",115,18,"Escape", Escape);
-        Program peliculaPainAndGain = new Program("Pelicula",129,18,"Pain & Gain", PainAndGain);
-        Program peliculaLastRunway = new Program("Pelicula",107,16,"Last Runway", LastRunway);
-        listaAccion.insert(peliculaParker);
-        listaAccion.insert(peliculaSkyscraper);
-        listaAccion.insert(peliculaEscape);
-        listaAccion.insert(peliculaPainAndGain);
-        listaAccion.insert(peliculaLastRunway);
-
-        //Imagenes niños:
-        Image BeeMovie = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/BeeMovie.png"));
-        Image JohnnyTest = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/JohnnyTest.png"));
-        Image PawPatrol = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/PawPatrol.png"));
-        Image Pokemo = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/Pokemo.png"));
-        Image Shrek = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/Shrek.png"));
-
-        //Inicializacion:
-        Image Kids = new Image(getClass().getResourceAsStream("/Image/Icons/KIDS.png"));
-        LDEProgramas listaNinos = new LDEProgramas("Kids", Kids);
-        Program peliculaBeeMovie = new Program("Pelicula",118,6,"BeeMovie", BeeMovie);
-        Program peliculaJohnnyTest = new Program("Pelicula",102,6,"Johnny Test", JohnnyTest);
-        Program peliculaPawPatrol = new Program("Pelicula",115,6,"Paw Patrol", PawPatrol);
-        Program peliculaPokemon = new Program("Pelicula",129,6,"Pokemon", Pokemo);
-        Program peliculaShrek = new Program("Pelicula",107,6,"Shrek", Shrek);
-        listaNinos.insert(peliculaBeeMovie);
-        listaNinos.insert(peliculaJohnnyTest);
-        listaNinos.insert(peliculaPawPatrol);
-        listaNinos.insert(peliculaPokemon);
-        listaNinos.insert(peliculaShrek);
-
-        LCDEGeneros listaGeneros = new LCDEGeneros();
-        listaGeneros.insert(listaComedia);
-        listaGeneros.insert(listaTerror);
-        listaGeneros.insert(listaRomance);
-        listaGeneros.insert(listaDocumentales);
-        listaGeneros.insert(listaAccion);
-        listaGeneros.insert(listaNinos);
-
-
+        this.uptadeData(18); //Inicializamos todas las listas al inicio con 18, para que se carguen todas
         //inicializacion del usuario actual:
-        activeAccount = returnActiveAccount("1");
+        activeAccount = returnActiveAccount("1");//obtenemos la cuenta activa
+
         userOne = new User(activeAccount.getName(), activeAccount.getAge());
+        this.activeUser = userOne; //Esto es necesario para que el programa no se caiga y no trabaje con nulls
         userTwo = new User("Teens", "15");
         userThree = new User("Kids", "6");
 
-        this.listaGlobal=listaGeneros.getStart();//que la lista global tome como inicio la lista de generos
-        //inicializamos las imagenes en el boton
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-        this.bT_Back.setDisable(true);//está deshabilitado para que no se vuelva atrás si está en categorias
 
         //inicializa los AnchorPane en false.
         this.aP_View.setVisible(false);
@@ -374,28 +228,17 @@ public class IndexController implements Initializable {
         this.bT_LogOut.setVisible(false);
         this.bT_LogOut.setDisable(true);
         this.bT_LeftContinue.setDisable(true);
+        this.bT_LeftContinue.setVisible(false);
+        this.bT_LeftRecomendation.setDisable(true);
+        this.bT_LeftRecomendation.setVisible(false);
         this.bT_BackWatching2.setVisible(false);
         this.bT_BackWatching2.setDisable(true);
 
+        //cargar imagen
+        Image base = new Image(getClass().getResourceAsStream("/Image/Movies/base.png"));
+        bT_Continue.setBackground(new Background(new BackgroundImage(base, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        bT_Recomendation.setBackground(new Background(new BackgroundImage(base, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
 
-        //--------------------------PRUEBAS--------------------------PRUEBAS--------------------------PRUEBAS--------------------------
-        //Este usuario es para las pruebas
-        User u = new User("Pedro", "28");
-        /*
-        u.getColaPrioridad().encolar(peliculaFirstSunday);
-        u.getColaPrioridad().encolar(peliculaIt);
-        u.getColaPrioridad().encolar(peliculaNewness);
-        */
-        this.userGlobal = u;
-        //NOTA: acá modifiqué el código para que se cree un usuario con cola vacía, y que estas se vayan agregando conforme uno hace pruebas
-        if (this.userGlobal.getColaPrioridad().isEmpty()) {
-            this.bT_Continue.setDisable(true);
-            this.bT_RightContinue.setDisable(true);
-        }else {
-            //Este carga la primera imagen sea por defecto, aquí se haría la validación de que si es null, se cargue una por defecto y se deshabiliten los botones.
-            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.userGlobal.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-        }//else
-        //--------------------------PRUEBAS--------------------------PRUEBAS--------------------------PRUEBAS--------------------------
     }//end del initialize
 
 
@@ -411,7 +254,27 @@ public class IndexController implements Initializable {
     void bT_UserOne(ActionEvent event) {
 
         activeUser = userOne;
+        //this.activeUser.getColaPrioridad().cancel();
+        if (this.activeUser.getColaPrioridad().isEmpty()) { //hacemos que sus botones se deshabiliten
+            this.bT_Continue.setDisable(true);
+            this.bT_RightContinue.setDisable(true);
+        }else{
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Continue.setDisable(false);
+            this.bT_RightContinue.setDisable(false);
+        }//else
+        if (this.activeUser.getGrafoRecomendacion().getColaAlmacen().isEmpty()){
+           this.bT_RightRecomendation.setDisable(true);
+           this.bT_Recomendation.setDisable(true);
+        }else {
+           BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+           this.bT_Recomendation.setBackground(new Background(new BackgroundImage(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+           this.bT_Recomendation.setDisable(false);
+           this.bT_RightRecomendation.setDisable(false);
+        }//else
 
+        this.uptadeData(Integer.parseInt(activeUser.getAge())); //cargamos las listas con los datos del usuario
         aP_Users.setVisible(false);
         aP_Category.setVisible(true);
         mB_CategoryUser.setText(userOne.getName());
@@ -422,7 +285,27 @@ public class IndexController implements Initializable {
     void bT_UserTwo(ActionEvent event) {
 
         activeUser = userTwo;
+        //this.activeUser.getColaPrioridad().cancel();
+        if (this.activeUser.getColaPrioridad().isEmpty()) {
+            this.bT_Continue.setDisable(true);
+            this.bT_RightContinue.setDisable(true);
+        }else{
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Continue.setDisable(false);
+            this.bT_RightContinue.setDisable(false);
+        }//else
+        if (this.activeUser.getGrafoRecomendacion().getColaAlmacen().isEmpty()){
+            this.bT_RightRecomendation.setDisable(true);
+            this.bT_Recomendation.setDisable(true);
+        }else {
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Recomendation.setBackground(new Background(new BackgroundImage(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Recomendation.setDisable(false);
+            this.bT_RightRecomendation.setDisable(false);
+        }//else
 
+        this.uptadeData(Integer.parseInt(activeUser.getAge()));
         aP_Users.setVisible(false);
         aP_Category.setVisible(true);
         mB_CategoryUser.setText(userTwo.getName());
@@ -433,7 +316,28 @@ public class IndexController implements Initializable {
     void bT_UserThree(ActionEvent event) {
 
         activeUser = userThree;
+        //this.activeUser.getColaPrioridad().cancel();
+        if (this.activeUser.getColaPrioridad().isEmpty()) {
+            this.bT_Continue.setDisable(true);
+            this.bT_RightContinue.setDisable(true);
+        }else{
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Continue.setDisable(false);
+            this.bT_RightContinue.setDisable(false);
+        }//else
 
+        if (this.activeUser.getGrafoRecomendacion().getColaAlmacen().isEmpty()){
+            this.bT_RightRecomendation.setDisable(true);
+            this.bT_Recomendation.setDisable(true);
+        }else {
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Recomendation.setBackground(new Background(new BackgroundImage(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Recomendation.setDisable(false);
+            this.bT_RightRecomendation.setDisable(false);
+        }//else
+
+        this.uptadeData(Integer.parseInt(activeUser.getAge()));
         aP_Users.setVisible(false);
         aP_Category.setVisible(true);
         mB_CategoryUser.setText(userThree.getName());
@@ -445,21 +349,21 @@ public class IndexController implements Initializable {
     //-------------Category Methods-------------//
     @FXML
     void bT_LogOut(ActionEvent event) throws IOException {
-
-        //Recoge toda la informacion de la cuenta para volver a escribirla, pero con el 1 de actividad
-        String name = activeAccount.getName();
-        String username = activeAccount.getUsername();
-        String password = activeAccount.getPassword();
-        String age = activeAccount.getAge();
-        String gender = activeAccount.getGender();
-        String cardNumber = activeAccount.getCardNumber();
-        String cv = activeAccount.getCv();
-        String expireDate = activeAccount.getExpireDate();
-        String status = "0";//significa que el usuario esta inactivo
-
-        //Crea un nuevo account, se llama al metodo que reescribe y lo reescribe
-        Account account = new Account(name, username, password, age, gender, cardNumber, cv, expireDate, status);
-        rewriteAccount(activeAccount.getName(), account);
+        //Hacemos que el usuario ya no sea el activo
+        Account[] array = rC.getRegisterFile();
+        try {
+            StatusBusiness statusBusiness = new StatusBusiness();
+            ArrayList<Integer> posiciones = (ArrayList<Integer>) statusBusiness.retornarPosiciones();
+            for (int i = 0; i < array.length; i++) {//Obtenemos los usuarios, y el que tenga la misma posicion en el
+                //ArrayList de status es el activo, por lo que se pone en 0
+                if (array[i].getUsername().equals(this.activeAccount.getUsername())){
+                    statusBusiness.logOut(i, posiciones);
+                    break;
+                }//if
+            }//for
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }//try-catch
 
         Stage stage = (Stage) bT_LogOut.getScene().getWindow();
         stage.setWidth(657);
@@ -476,6 +380,10 @@ public class IndexController implements Initializable {
 
         aP_Category.setVisible(false);
         aP_Users.setVisible(true);
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        Image base = new Image(getClass().getResourceAsStream("/Image/Movies/base.png"));
+        bT_Continue.setBackground(new Background(new BackgroundImage(base, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        bT_Recomendation.setBackground(new Background(new BackgroundImage(base, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
 
     }//end bT_SwitchUser
 
@@ -486,69 +394,41 @@ public class IndexController implements Initializable {
         this.bT_Categories.setVisible(false);
         this.bT_RightCategories.setVisible(false);
         this.bT_LeftCategories.setVisible(false);
-
         //pone todos los elementos de movies
         this.bT_Movies.setVisible(true);
         this.bT_RightMovies.setVisible(true);
         this.bT_LeftMovies.setVisible(true);
         this.bT_Back.setDisable(false);
 
-        this.programGlobal =listaGlobal.getStart();//traer el primer apuntador de peliculas
+        this.programGlobal = listaProgramasActiva.getStart();//traer el primer apuntador de peliculas
         //Poner de fondo del boton la imagen de la pelicula
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
         this.bT_Movies.setBackground(new Background(new BackgroundImage(programGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.bT_Back.setDisable(false);//se habilita para volver a categorias
         this.bT_LeftMovies.setDisable(true); // por default el boton de la izquierda se deshabilita porque al inicio el before es nulo
-
+        if (this.listaProgramasActiva.getSize()>1){ //Este if es MUY necesario, ya que sino se puede bloquear el boton de la derecha de movies aunque este no deba
+            this.bT_RightMovies.setDisable(false);
+        }else {
+            this.bT_RightMovies.setDisable(true);
+        }//else
         this.categoriesActive= false;//ESTO indica que ya no está activo el botón de categorías
 
-    }//end del bT_Nodo
+    }//end del bT_Categories
 
     @FXML
     void bT_LeftCategories(ActionEvent event) {
-        //si programaGlobal es null, que Nodo ponga las categorias
-        if (this.programGlobal ==null) {
-            this.listaGlobal=this.listaGlobal.before;
-
-            //pone la imagen de la categoria cada vez que pasa de categoria
-            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-        }else {
-            //en caso contrario, Nodo pone las peliculas
-            this.programGlobal =this.programGlobal.before;
-
-            //Poner de fondo del boton la imagen de la pelicula
-            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Categories.setBackground(new Background(new BackgroundImage(programGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-
-            //deshabilita el left cada vez que se llega al final
-            if(programGlobal.before==null) {
-                this.bT_LeftCategories.setDisable(true);
-            }//end del if
-            this.bT_RightCategories.setDisable(false);
-        }//end del else
+        this.listaProgramasActiva =this.listaProgramasActiva.before;
+        //pone la imagen de la categoria cada vez que pasa de categoria
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaProgramasActiva.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
     }//end del bT_LeftCategories
 
     @FXML
     void bT_RightCategories(ActionEvent event) {
-        //si programaGlobal es nulo, que Nodo ponga las categorias
-        if (this.programGlobal ==null) {
-            this.listaGlobal=this.listaGlobal.next;
-
-            //pone la imagen de la categoria cada vez que se pasa de categoria
-            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-        }else {
-            //en caso contrario, que Nodo ponga las peliculas
-            this.programGlobal =this.programGlobal.next;
-            //Poner de fondo del boton la imagen de la pelicula
-            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Categories.setBackground(new Background(new BackgroundImage(programGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-            this.bT_LeftCategories.setDisable(false);//habilitamos el boton de la izquierda apenas nos corremos una posicion en la lista
-            if (this.programGlobal.next==null) {
-                this.bT_RightCategories.setDisable(true);
-            }//end del if
-        }//end del else
+        this.listaProgramasActiva =this.listaProgramasActiva.next;
+        //pone la imagen de la categoria cada vez que se pasa de categoria
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaProgramasActiva.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
     }//end del bT_RightCategories
 
     @FXML
@@ -558,6 +438,14 @@ public class IndexController implements Initializable {
         aP_View.setVisible(true);
         bT_BackWatching.setVisible(true);
         bT_BackWatching.setDisable(false);
+
+        this.bT_ViewFinish3.setDisable(true);
+        this.bT_ViewFinish3.setVisible(false);
+        this.bT_ViewFinish2.setDisable(true);
+        this.bT_ViewFinish2.setVisible(false);
+        //ponemos visible el finish respectivo
+        this.bT_ViewFinish.setDisable(false);
+        this.bT_ViewFinish.setVisible(true);
 
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
         this.bT_ViewMovie.setBackground(new Background(new BackgroundImage(this.programGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
@@ -573,53 +461,27 @@ public class IndexController implements Initializable {
 
     @FXML
     void bT_LeftMovies(ActionEvent event) {
-
-        //si programaGlobal es null, que Nodo ponga las categorias
-        if (this.programGlobal ==null) {
-            this.listaGlobal=this.listaGlobal.before;
-
-            //pone la imagen de la categoria cada vez que pasa de categoria
-            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-        }else {
-            //en caso contrario, Nodo pone las peliculas
-            this.programGlobal =this.programGlobal.before;
-
-            //Poner de fondo del boton la imagen de la pelicula
-            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Movies.setBackground(new Background(new BackgroundImage(programGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-
-            //deshabilita el left cada vez que se llega al final
-            if(programGlobal.before==null) {
-                this.bT_LeftMovies.setDisable(true);
-            }//end del if
-            this.bT_RightMovies.setDisable(false);
-        }//end del else
-
+        this.programGlobal =this.programGlobal.before;
+        //Poner de fondo del boton la imagen de la pelicula
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Movies.setBackground(new Background(new BackgroundImage(programGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        //deshabilita el left cada vez que se llega al final
+        if(programGlobal.before==null) {
+            this.bT_LeftMovies.setDisable(true);
+        }//end del if
+        this.bT_RightMovies.setDisable(false);
     }//end bT_LeftMovies
 
     @FXML
     void bT_RightMovies(ActionEvent event) {
-
-        //si programaGlobal es nulo, que Nodo ponga las categorias
-        if (this.programGlobal ==null) {
-            this.listaGlobal=this.listaGlobal.next;
-
-            //pone la imagen de la categoria cada vez que se pasa de categoria
-            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Categories.setBackground(new Background(new BackgroundImage(this.listaGlobal.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-        }else {
-            //en caso contrario, que Nodo ponga las peliculas
-            this.programGlobal =this.programGlobal.next;
-            //Poner de fondo del boton la imagen de la pelicula
-            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Movies.setBackground(new Background(new BackgroundImage(programGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-            this.bT_LeftMovies.setDisable(false);//habilitamos el boton de la izquierda apenas nos corremos una posicion en la lista
-            if (this.programGlobal.next==null) {
-                this.bT_RightMovies.setDisable(true);
-            }//end del if
-        }//end del else
-
+        this.programGlobal =this.programGlobal.next;
+        //Poner de fondo del boton la imagen de la pelicula
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Movies.setBackground(new Background(new BackgroundImage(programGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_LeftMovies.setDisable(false);//habilitamos el boton de la izquierda apenas nos corremos una posicion en la lista
+        if (this.programGlobal.next==null) {
+            this.bT_RightMovies.setDisable(true);
+        }//end del if
     }//end bT_RightMovies
 
     @FXML
@@ -637,8 +499,7 @@ public class IndexController implements Initializable {
 
         //vuelve a poner de fondo las imagenes de categorias
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-        this.programGlobal =null;//reinicializamos para que los botones derecha e izquierda funciones con categorias y no con peliculas
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaProgramasActiva.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.bT_Back.setDisable(true);//cuando volvemos a categorias deshabilitamos este boton
 
         this.categoriesActive= true;//ESTO significa que volvemos a estar en las categorías, por lo que se hace menos proceso al usar lo de la cola,
@@ -656,39 +517,159 @@ public class IndexController implements Initializable {
 
         //vuelve a poner de fondo las imagenes de categorias
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaProgramasActiva.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.bT_Back.setDisable(false);//cuando volvemos a categorias deshabilitamos este boton
 
-        //--------------------------------
         //Este IF permite que cuando se presione el back de cuando la pelicula se está vizualizando, si dicho programa no fue finalizado
         //Este se agregue a la cola y ya esté disponible tanto el botón de derecha de la cola y la cola como tal
         if (this.programGlobal.isVisto()==false){
-            this.userGlobal.getColaPrioridad().encolar(this.programGlobal);
-            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.userGlobal.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.activeUser.getColaPrioridad().encolar(this.programGlobal);
+            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
             this.bT_RightContinue.setDisable(false);
             this.bT_Continue.setDisable(false);
         }//if
-        //--------------------------------
 
     }//end del bT_BackWatching
 
     @FXML
-    void bT_LeftContinue(ActionEvent event) throws IOException {}//end del bT_LeftContinue
+    void bT_LeftContinue (ActionEvent event){
+
+    }
+
+    @FXML
+    void bt_FInish(ActionEvent event) throws IOException {
+        this.programGlobal.setVisto(true);
+        this.activeUser.getGrafoRecomendacion().agregaVertice(this.programGlobal);//Es necesario preguntar por el genero del programa, ya que sino entrara siempre en el primer if
+        if (this.listaProgramasActiva.buscarPrograma(this.programGlobal.nombre, this.activeUser.getGrafoRecomendacion().getColaAlmacen())!=null){
+            if (this.programGlobal.genero.equals("comedia")&&this.activeUser.getGrafoRecomendacion().getcComedia()>this.activeUser.getGrafoRecomendacion().getcTerror() && this.activeUser.getGrafoRecomendacion().getcComedia()>this.activeUser.getGrafoRecomendacion().getcRomance() && this.activeUser.getGrafoRecomendacion().getcComedia()>this.activeUser.getGrafoRecomendacion().getcDocumental() && this.activeUser.getGrafoRecomendacion().getcComedia()>this.activeUser.getGrafoRecomendacion().getcAccion() && this.activeUser.getGrafoRecomendacion().getcComedia()>this.activeUser.getGrafoRecomendacion().getcKid()){
+                this.activeUser.getGrafoRecomendacion().getColaAlmacen().encolar(this.listaProgramasActiva.buscarPrograma(this.programGlobal.nombre, this.activeUser.getGrafoRecomendacion().getColaAlmacen()));
+            }else if (this.programGlobal.genero.equals("romance")&&this.activeUser.getGrafoRecomendacion().getcRomance()>this.activeUser.getGrafoRecomendacion().getcComedia() && this.activeUser.getGrafoRecomendacion().getcRomance()>this.activeUser.getGrafoRecomendacion().getcTerror() && this.activeUser.getGrafoRecomendacion().getcRomance()>this.activeUser.getGrafoRecomendacion().getcDocumental() && this.activeUser.getGrafoRecomendacion().getcRomance()>this.activeUser.getGrafoRecomendacion().getcAccion() && this.activeUser.getGrafoRecomendacion().getcRomance()>this.activeUser.getGrafoRecomendacion().getcKid() ){
+                this.activeUser.getGrafoRecomendacion().getColaAlmacen().encolar(this.listaProgramasActiva.buscarPrograma(this.programGlobal.nombre, this.activeUser.getGrafoRecomendacion().getColaAlmacen()));
+            }else if (this.programGlobal.genero.equals("documental")&&this.activeUser.getGrafoRecomendacion().getcDocumental()>this.activeUser.getGrafoRecomendacion().getcTerror() && this.activeUser.getGrafoRecomendacion().getcDocumental()>this.activeUser.getGrafoRecomendacion().getcRomance() && this.activeUser.getGrafoRecomendacion().getcDocumental()>this.activeUser.getGrafoRecomendacion().getcComedia() && this.activeUser.getGrafoRecomendacion().getcDocumental()>this.activeUser.getGrafoRecomendacion().getcAccion()&& this.activeUser.getGrafoRecomendacion().getcDocumental()>this.activeUser.getGrafoRecomendacion().getcKid() ) {
+                this.activeUser.getGrafoRecomendacion().getColaAlmacen().encolar(this.listaProgramasActiva.buscarPrograma(this.programGlobal.nombre, this.activeUser.getGrafoRecomendacion().getColaAlmacen()));
+            }else if (this.programGlobal.genero.equals("accion")&&this.activeUser.getGrafoRecomendacion().getcAccion()>this.activeUser.getGrafoRecomendacion().getcTerror() && this.activeUser.getGrafoRecomendacion().getcAccion()>this.activeUser.getGrafoRecomendacion().getcRomance() && this.activeUser.getGrafoRecomendacion().getcAccion()>this.activeUser.getGrafoRecomendacion().getcDocumental() && this.activeUser.getGrafoRecomendacion().getcAccion()>this.activeUser.getGrafoRecomendacion().getcComedia()&& this.activeUser.getGrafoRecomendacion().getcAccion()>this.activeUser.getGrafoRecomendacion().getcKid() ) {
+                this.activeUser.getGrafoRecomendacion().getColaAlmacen().encolar(this.listaProgramasActiva.buscarPrograma(this.programGlobal.nombre, this.activeUser.getGrafoRecomendacion().getColaAlmacen()));
+            }else if (this.programGlobal.genero.equals("kid")&&this.activeUser.getGrafoRecomendacion().getcKid()>this.activeUser.getGrafoRecomendacion().getcTerror() && this.activeUser.getGrafoRecomendacion().getcKid()>this.activeUser.getGrafoRecomendacion().getcRomance() && this.activeUser.getGrafoRecomendacion().getcKid()>this.activeUser.getGrafoRecomendacion().getcDocumental() && this.activeUser.getGrafoRecomendacion().getcKid()>this.activeUser.getGrafoRecomendacion().getcComedia() && this.activeUser.getGrafoRecomendacion().getcKid()>this.activeUser.getGrafoRecomendacion().getcAccion()) {
+                this.activeUser.getGrafoRecomendacion().getColaAlmacen().encolar(this.listaProgramasActiva.buscarPrograma(this.programGlobal.nombre, this.activeUser.getGrafoRecomendacion().getColaAlmacen()));
+            }else if (this.programGlobal.genero.equals("terror")&&this.activeUser.getGrafoRecomendacion().getcTerror()>this.activeUser.getGrafoRecomendacion().getcKid() && this.activeUser.getGrafoRecomendacion().getcTerror()>this.activeUser.getGrafoRecomendacion().getcRomance() && this.activeUser.getGrafoRecomendacion().getcTerror()>this.activeUser.getGrafoRecomendacion().getcDocumental() && this.activeUser.getGrafoRecomendacion().getcTerror()>this.activeUser.getGrafoRecomendacion().getcComedia() && this.activeUser.getGrafoRecomendacion().getcTerror()>this.activeUser.getGrafoRecomendacion().getcAccion()) {
+                this.activeUser.getGrafoRecomendacion().getColaAlmacen().encolar(this.listaProgramasActiva.buscarPrograma(this.programGlobal.nombre, this.activeUser.getGrafoRecomendacion().getColaAlmacen()));
+            }//else-if
+            if (!this.activeUser.getGrafoRecomendacion().getColaAlmacen().isEmpty()){//Este if es MUY necesario, ya que
+                //si por casualidad, se ve un programa el cual es el unico de esa categoria, por lo que no se recomienda
+                //y luego se ve otro de otra categoria pero los contadores son iguales, se tretará de llamar como a un programa
+                //nulo en la interfaz y se caerá, por lo que es necesario hacer esta validación para saber si el head
+                //de la cola de recomendación es null o no
+                BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+                this.bT_Recomendation.setBackground(new Background(new BackgroundImage(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+                this.bT_Recomendation.setDisable(false);
+                this.bT_RightRecomendation.setDisable(false);
+            }//if
+        }//if
+        //Borramos si en la cola también está el programa que estamos viendo desde categoría
+        if (this.activeUser.getColaPrioridad().exists(this.programGlobal.nombre)){
+            //Si existe en la cola de prioridad, la vemos y la eliminamos de ahí, ya que es como si la vieramos
+            this.activeUser.getColaPrioridad().borrar(this.programGlobal.nombre);
+            if (this.activeUser.getColaPrioridad().isEmpty()){//esto permite que el botn se desactive si se vacía la cola
+                this.bT_Continue.setDisable(true);
+                this.bT_RightContinue.setDisable(true);
+                BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+                Image base = new Image(getClass().getResourceAsStream("/Image/Movies/base.png"));
+                bT_Continue.setBackground(new Background(new BackgroundImage(base, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+
+            }else {//Este else hace que se cambie a la imagen del nuevo head
+                BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+                this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            }//else
+        }//if
+    }//bt_finish
+
+    @FXML
+    void bt_FInish2(ActionEvent event) throws IOException {
+        //Este finish2 se usa para cuando se ve un programa desde la cola de prioridad
+        this.bT_BackWatching2(event);
+        this.activeUser.getColaPrioridad().head().setVisto(true);//o vemos desde la cola de prioridad
+        this.activeUser.getColaPrioridad().desencolar();
+        if (activeUser.getColaPrioridad().isEmpty()){
+            this.bT_Continue.setDisable(true);
+            this.bT_RightContinue.setDisable(true);
+            this.bT_ViewFinish2.setVisible(false);
+            this.bT_ViewFinish2.setDisable(true);
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            Image base = new Image(getClass().getResourceAsStream("/Image/Movies/base.png"));
+            bT_Continue.setBackground(new Background(new BackgroundImage(base, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+
+        }else {
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        }//else
+    }//bt_FInish2
+
+    @FXML
+    void bt_FInish3(ActionEvent event) throws IOException {
+        //Este finish3 se usa para cuando se ve un programa desde la cola de recomendacion del grafo
+        this.bT_BackWatching2(event);
+        if (this.activeUser.getColaPrioridad().exists(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().nombre)){
+            //Si existe en la cola de prioridad, la vemos y la eliminamos de ahí, ya que es como si la vieramos
+            this.activeUser.getColaPrioridad().borrar(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().nombre);
+            if (this.activeUser.getColaPrioridad().isEmpty()){
+                this.bT_Continue.setDisable(true);
+                this.bT_RightContinue.setDisable(true);
+                BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+                Image base = new Image(getClass().getResourceAsStream("/Image/Movies/base.png"));
+                bT_Continue.setBackground(new Background(new BackgroundImage(base, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            }else {
+                BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+                this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            }//else
+        }//if
+    }//bt_FInish3
+
+    @FXML
+    void bT_Recomendation(ActionEvent event){
+        //quita los elementos del menu
+        this.activeRecomendation=true; //Sabemos que vemos un programas desde la cola del grafo
+        aP_Category.setVisible(false);
+        //trae los elementos del view de la pelicula
+        aP_View.setVisible(true);
+        this.bT_BackWatching.setVisible(false);
+        this.bT_BackWatching.setDisable(true);
+
+        this.bT_BackWatching2.setVisible(true);
+        this.bT_BackWatching2.setDisable(false);
+
+        this.bT_ViewFinish3.setDisable(false); //Activamos el finish de la cola de recomendacion
+        this.bT_ViewFinish3.setVisible(true);
+
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        //Se usa el mismo bt_Movie porque es igual que el de arriba.
+        this.bT_ViewMovie.setBackground(new Background(new BackgroundImage(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.lB_Info.setText("Now watching \n" +
+                this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().nombre + ".\n" +
+                "\n" +
+                this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().duracion + " min.\n" +
+                "\n" +
+                "For older than " + this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().restriccion +
+                "\nyears old.");
+    }//bT_Recomendation
+
+    @FXML
+    void bT_RightRecomendation(ActionEvent event) {
+        this.activeUser.getGrafoRecomendacion().getColaAlmacen().encolar(this.activeUser.getGrafoRecomendacion().getColaAlmacen().desencolar());
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Recomendation.setBackground(new Background(new BackgroundImage(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+    }//bt_RightRecomendation
 
     @FXML
     void bT_RightContinue(ActionEvent event) throws IOException {
         //Esto permite que se encole el head y se mueva el head a la siguiente
-        this.userGlobal.getColaPrioridad().encolar(this.userGlobal.getColaPrioridad().desencolar());
+        this.activeUser.getColaPrioridad().encolar(this.activeUser.getColaPrioridad().desencolar());
         //Esto permite que se carguen las imagenes del siguiente programa
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-        this.bT_Continue.setBackground(new Background(new BackgroundImage(this.userGlobal.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
-        //System.out.println("boton derecha continuo");
+        this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
     }//end del bT_LeftContinue
 
     @FXML
     void bT_Continue(ActionEvent event) throws IOException {
-        //NOTA: Acá utilizo el mismo código de lo del bt_Movie, solo que agrego el botón respectivo
-
         //quita los elementos del menu
         aP_Category.setVisible(false);
         //trae los elementos del view de la pelicula
@@ -699,15 +680,23 @@ public class IndexController implements Initializable {
         this.bT_BackWatching2.setVisible(true);
         this.bT_BackWatching2.setDisable(false);
 
+        this.bT_ViewFinish.setVisible(false);
+        this.bT_ViewFinish.setDisable(true);
+        this.bT_ViewFinish3.setVisible(false);
+        this.bT_ViewFinish3.setDisable(true);
+
+        this.bT_ViewFinish2.setVisible(true);
+        this.bT_ViewFinish2.setDisable(false);
+
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
         //Se usa el mismo bt_Movie porque es igual que el de arriba.
-        this.bT_ViewMovie.setBackground(new Background(new BackgroundImage(this.userGlobal.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_ViewMovie.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
         this.lB_Info.setText("Now watching \n" +
-                this.userGlobal.getColaPrioridad().head().nombre + ".\n" +
+                this.activeUser.getColaPrioridad().head().nombre + ".\n" +
                 "\n" +
-                this.userGlobal.getColaPrioridad().head().duracion + " min.\n" +
+                this.activeUser.getColaPrioridad().head().duracion + " min.\n" +
                 "\n" +
-                "For older than " + this.userGlobal.getColaPrioridad().head().restriccion +
+                "For older than " + this.activeUser.getColaPrioridad().head().restriccion +
                 "\nyears old.");
 
     }//end del bT_BackWatching
@@ -727,7 +716,7 @@ public class IndexController implements Initializable {
 
             //vuelve a poner de fondo las imagenes de categorias
             BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(listaProgramasActiva.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
             this.bT_Back.setDisable(true);//cuando volvemos a categorias deshabilitamos este boton
 
         }else {// PERO, si el botón de las películas es el activo, se debe hacer lo mismo, pero también se fdebe llamar al método
@@ -740,7 +729,7 @@ public class IndexController implements Initializable {
 
             //vuelve a poner de fondo las imagenes de categorias
             BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
-            this.bT_Categories.setBackground(new Background(new BackgroundImage(listaGlobal.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Categories.setBackground(new Background(new BackgroundImage(listaProgramasActiva.img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
             this.bT_Back.setDisable(false);//cuando volvemos a categorias deshabilitamos este boton
 
             //SE llama a bt_Back
@@ -748,7 +737,16 @@ public class IndexController implements Initializable {
         }//endElse
         this.bT_BackWatching2.setVisible(false);
         this.bT_BackWatching2.setDisable(true);
-        //NOTA: En este método no es necesario cambiar a categorieActive ya que cono solo el cambio anterior es suficiente.
+
+        if (this.activeRecomendation){//Este if permite diferenciar si se hace desde la cola de prioridad o si se hace desde la de recomendación
+            //Si se hace desde la recomendacion y el programa no se ve, queda como NO finalizado y se agrega en la cola de prioridad
+            this.activeUser.getColaPrioridad().encolar(this.activeUser.getGrafoRecomendacion().getColaAlmacen().head());
+            this.activeRecomendation=false;
+            BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+            this.bT_Continue.setBackground(new Background(new BackgroundImage(this.activeUser.getColaPrioridad().head().img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+            this.bT_Continue.setDisable(false);
+            this.bT_RightContinue.setDisable(false);
+        }//if
     }//end del bT_BackWatching
     //-------------Category Methods-------------//
 
@@ -758,7 +756,7 @@ public class IndexController implements Initializable {
     void bT_Confirm(ActionEvent event) {
 
         String newName = tF_NewName.getText();
-        String newAge = tF_NewName.getText();
+        String newAge = tF_NewAge.getText();
 
         if(cB_User2.isSelected()){
             userTwo = new User(newName, newAge);
@@ -790,7 +788,7 @@ public class IndexController implements Initializable {
     }//end cB_User2
 
     @FXML
-    void cB_User3(ActionEvent event) {
+    void cB_User3 (ActionEvent event) {
 
         cB_User2.setDisable(true);
 
@@ -802,17 +800,25 @@ public class IndexController implements Initializable {
     public Account returnActiveAccount(String status){
 
         Account array[] = rC.getRegisterFile();
-
-        for (int i = 0; i < array.length; i++) {
-            if(array[i].getStatus().equals(status))
-                return array[i];
-        }//end for
+        StatusBusiness statusBusiness = new StatusBusiness();
+        try {
+            ArrayList<Integer> posiciones = (ArrayList<Integer>) statusBusiness.retornarPosiciones();
+            for (int i = 0; i < posiciones.size(); i++) {
+                if (posiciones.get(i)==1){
+                    return array[i];
+                }//if
+            }//for
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }//try-catch
 
         return null;
 
     }//end returnUsername
 
-    public void rewriteAccount(String name, Account account) {
+    public void rewriteAccount (String name, Account account) {
 
         String changes = account.toString();
 
@@ -853,5 +859,171 @@ public class IndexController implements Initializable {
         }//end catch
 
     }//end editACountry
+
+    //Metodos auxiliares
+    private void uptadeData (int edad){
+        //Este es muy importante, ya que nos permite estar actualizando constantemente las listas y modificarlas respecto a la edad del ususario activo
+
+        //Imagenes de comedia:
+        Image FirstSunday = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/FirstSunday.png"));
+        Image GrownUps = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/GrownUps.png"));
+        Image ChangeUp = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/ChangeUp.png"));
+        Image Norbit = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/Norbit.png"));
+        Image WeddingRinger = new Image(getClass().getResourceAsStream("/Image/Movies/Comedy/WeddingRinger.png"));
+
+        //Inicialización:
+        Image Comedy = new Image(getClass().getResourceAsStream("/Image/Icons/Comedy.png"));
+        LDEProgramas listaComedia=new LDEProgramas("Comedia", Comedy);
+        Program peliculaFirstSunday = new Program("Pelicula",98,16,"First Sunday","comedia", FirstSunday);
+        Program peliculaGrownUps = new Program("Pelicula",102,12,"Grown Ups","comedia", GrownUps);
+        Program peliculaChangeUp = new Program("Pelicula",112,16,"Change Up","comedia", ChangeUp);
+        Program peliculaNorbit = new Program("Pelicula",102,16,"Norbit","comedia", Norbit);
+        Program peliculaWeddingRinger = new Program("Pelicula",101,14,"Wedding Ringer","comedia", WeddingRinger);
+        listaComedia.insert(peliculaFirstSunday,edad);
+        listaComedia.insert(peliculaGrownUps,edad);
+        listaComedia.insert(peliculaChangeUp,edad);
+        listaComedia.insert(peliculaNorbit,edad);
+        listaComedia.insert(peliculaWeddingRinger,edad);
+
+        //Imagenes de terror:
+        Image IT = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/IT.png"));
+        Image Annabelle = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Annabelle.png"));
+        Image Mama = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Mama.png"));
+        Image Veronica = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Veronica.png"));
+        Image Saw = new Image(getClass().getResourceAsStream("/Image/Movies/Terror/Saw.png"));
+
+        //Inicializacion:
+        Image Horror = new Image(getClass().getResourceAsStream("/Image/Icons/Horror.png"));
+        LDEProgramas listaTerror=new LDEProgramas("Terror", Horror);
+        Program peliculaIt = new Program("Pelicula",136,15,"It","terror", IT);
+        Program peliculaAnnabelle = new Program("Pelicula",98,15,"Annabelle","terror", Annabelle);
+        Program peliculaMama = new Program("Pelicula",100,15,"Mama","terror", Mama);
+        Program peliculaVeronica = new Program("Pelicula",102,16,"Veronica","terror", Veronica);
+        Program peliculaSaw = new Program("Pelicula",111,18,"Saw","terror", Saw);
+        listaTerror.insert(peliculaIt,edad);
+        listaTerror.insert(peliculaAnnabelle,edad);
+        listaTerror.insert(peliculaMama,edad);
+        listaTerror.insert(peliculaVeronica,edad);
+        listaTerror.insert(peliculaSaw,edad);
+
+        //Imagenes de romance:
+        Image FriendsWithBenefits = new Image(getClass().getResourceAsStream("/Image/Movies/Love/FriendsWithBenefits.png"));
+        Image Amar = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Amar.png"));
+        Image TheNotebook = new Image(getClass().getResourceAsStream("/Image/Movies/Love/TheNotebook.png"));
+        Image Newness = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Newness.png"));
+        Image CatchAndRelease = new Image(getClass().getResourceAsStream("/Image/Movies/Love/Catch&Release.png"));
+
+        //Inicializacion:
+        Image Love = new Image(getClass().getResourceAsStream("/Image/Icons/Love.png"));
+        LDEProgramas listaRomance=new LDEProgramas("Romance", Love);
+        Program peliculaFriendsWithBenefits = new Program("Pelicula",109,16,"Friends with Benefits","romance", FriendsWithBenefits);
+        Program peliculaAmar = new Program("Pelicula",105,16,"Amar","romance", Amar);
+        Program peliculaTheNotebook = new Program("Pelicula",124,16,"The Notebook","romance", TheNotebook);
+        Program peliculaNewness = new Program("Pelicula",112,16,"Newness","romance", Newness);
+        Program peliculaCatchAndRelease = new Program("Pelicula",105,16,"Catch & Release","romance", CatchAndRelease);
+        listaRomance.insert(peliculaFriendsWithBenefits,edad);
+        listaRomance.insert(peliculaAmar,edad);
+        listaRomance.insert(peliculaTheNotebook,edad);
+        listaRomance.insert(peliculaNewness,edad);
+        listaRomance.insert(peliculaCatchAndRelease,edad);
+
+        //Imagenes de Documentales:
+        Image PabloEscobar = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/PabloEscobar.png"));
+        Image StoryOfDiana = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/StoryOfDiana.png"));
+        Image GameChangers = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/GameChangers.png"));
+        Image WorldWar = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/WorldWar.png"));
+        Image ExpedientesCriminales = new Image(getClass().getResourceAsStream("/Image/Movies/Documentaries/ExpedientesCriminales.png"));
+
+        //Inicializacion:
+        Image Documentaries = new Image(getClass().getResourceAsStream("/Image/Icons/Documentaries.png"));
+        LDEProgramas listaDocumentales=new LDEProgramas("Documentales", Documentaries);
+        Program peliculaPabloEscobar = new Program("Pelicula",46,13,"Pablo Escobar","documental", PabloEscobar);
+        Program peliculaStoryOfDiana = new Program("Pelicula",83,13,"Story Of Diana","documental", StoryOfDiana);
+        Program peliculaGameChangers = new Program("Pelicula",85,16,"Game Changers","documental", GameChangers);
+        Program serieWorldWar = new Program("Serie",51,13,"World War","documental", WorldWar);
+        Program serieExpedientesCriminales = new Program("Serie",46,16,"Expedientes Criminales","documental", ExpedientesCriminales);
+        listaDocumentales.insert(peliculaPabloEscobar,edad);
+        listaDocumentales.insert(peliculaStoryOfDiana,edad);
+        listaDocumentales.insert(peliculaGameChangers,edad);
+        listaDocumentales.insert(serieWorldWar,edad);
+        listaDocumentales.insert(serieExpedientesCriminales,edad);
+
+        //Imagenes de accion:
+        Image Parker = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Parker.png"));
+        Image Skyscraper = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Skyscraper.png"));
+        Image Escape = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Escape.png"));
+        Image PainAndGain = new Image(getClass().getResourceAsStream("/Image/Movies/Action/Pain&Gain.png"));
+        Image LastRunway = new Image(getClass().getResourceAsStream("/Image/Movies/Action/LastRunway.png"));
+
+        //Inicializacion:
+        Image Action = new Image(getClass().getResourceAsStream("/Image/Icons/Action.png"));
+        LDEProgramas listaAccion=new LDEProgramas("Acción", Action);
+        Program peliculaParker = new Program("Pelicula",118,18,"Parker","accion", Parker);
+        Program peliculaSkyscraper = new Program("Pelicula",102,18,"Skyscraper","accion", Skyscraper);
+        Program peliculaEscape = new Program("Pelicula",115,18,"Escape","accion", Escape);
+        Program peliculaPainAndGain = new Program("Pelicula",129,18,"Pain & Gain","accion", PainAndGain);
+        Program peliculaLastRunway = new Program("Pelicula",107,16,"Last Runway","accion", LastRunway);
+        listaAccion.insert(peliculaParker,edad);
+        listaAccion.insert(peliculaSkyscraper,edad);
+        listaAccion.insert(peliculaEscape,edad);
+        listaAccion.insert(peliculaPainAndGain,edad);
+        listaAccion.insert(peliculaLastRunway,edad);
+
+        //Imagenes niños:
+        Image BeeMovie = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/BeeMovie.png"));
+        Image JohnnyTest = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/JohnnyTest.png"));
+        Image PawPatrol = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/PawPatrol.png"));
+        Image Pokemo = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/Pokemo.png"));
+        Image Shrek = new Image(getClass().getResourceAsStream("/Image/Movies/Kids/Shrek.png"));
+
+        //Inicializacion:
+        Image Kids = new Image(getClass().getResourceAsStream("/Image/Icons/KIDS.png"));
+        LDEProgramas listaNinos = new LDEProgramas("Kids", Kids);
+        Program peliculaBeeMovie = new Program("Pelicula",118,6,"BeeMovie","kid", BeeMovie);
+        Program peliculaJohnnyTest = new Program("Pelicula",102,6,"Johnny Test","kid", JohnnyTest);
+        Program peliculaPawPatrol = new Program("Pelicula",115,6,"Paw Patrol","kid", PawPatrol);
+        Program peliculaPokemon = new Program("Pelicula",129,6,"Pokemon","kid", Pokemo);
+        Program peliculaShrek = new Program("Pelicula",107,6,"Shrek","kid", Shrek);
+        listaNinos.insert(peliculaBeeMovie,edad);
+        listaNinos.insert(peliculaJohnnyTest,edad);
+        listaNinos.insert(peliculaPawPatrol,edad);
+        listaNinos.insert(peliculaPokemon,edad);
+        listaNinos.insert(peliculaShrek,edad);
+
+        LCDEGeneros listaGeneros = new LCDEGeneros();
+        listaGeneros.insert(listaComedia);
+        listaGeneros.insert(listaTerror);
+        listaGeneros.insert(listaRomance);
+        listaGeneros.insert(listaDocumentales);
+        listaGeneros.insert(listaAccion);
+        listaGeneros.insert(listaNinos);
+
+        //ESTO que sigue es general, por lo que no define la cuestion de la edad del usuario, solo carga lo necesario
+        this.listaGenerosGlobal = listaGeneros;
+        this.listaProgramasActiva =this.listaGenerosGlobal.getStart();//sobreescribimos la listaglobal segun la edad
+        //inicializamos las imagenes en el boton
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
+        this.bT_Categories.setBackground(new Background(new BackgroundImage(listaProgramasActiva.getImg(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bSize) ));
+        this.bT_Back.setDisable(true);//está deshabilitado para que no se vuelva atrás si está en categorias
+        if (!this.categoriesActive){ //ESTA es la misma idea que en el backWacthing2
+            //Esto sería el efecto del bt_Back
+            //ESTO permite que si cambiamos de usuario, no
+            //quita todos los elementos de movies
+            this.bT_Movies.setVisible(false);
+            this.bT_RightMovies.setVisible(false);
+            this.bT_LeftMovies.setVisible(false);
+
+            //pone todos los elementos de categories
+            this.bT_Categories.setVisible(true);
+            this.bT_RightCategories.setVisible(true);
+            this.bT_LeftCategories.setVisible(true);
+
+            //vuelve a poner de fondo las imagenes de categorias
+            this.programGlobal = null;//reiniciamos para que los botones derecha e izquierda funciones con categorias y no con peliculas
+
+            this.categoriesActive= true;//ESTO significa que volvemos a estar en las categorías, por lo que se hace menos proceso al usar lo de la cola,
+            //es decir, con respecto a la interfaz gráfica.
+        }//if
+    }//uptadeData
 
 }//end CategoryController class 293x167
